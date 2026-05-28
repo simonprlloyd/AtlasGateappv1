@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Atlas Gate — Dallas Home Services</title>
+<title>AtlasGate — Dallas Home Services</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,9 +20,11 @@
     --ink: #0A0E1A;
     --muted: #6B7280;
     --line: rgba(11, 31, 58, 0.08);
-    --shadow-sm: 0 1px 2px rgba(11, 31, 58, 0.06), 0 1px 3px rgba(11, 31, 58, 0.04);
-    --shadow-md: 0 4px 12px rgba(11, 31, 58, 0.08), 0 2px 4px rgba(11, 31, 58, 0.04);
-    --shadow-lg: 0 12px 32px rgba(11, 31, 58, 0.12), 0 4px 8px rgba(11, 31, 58, 0.06);
+    --danger: #DC2626;
+    --success: #16A34A;
+    --shadow-sm: 0 1px 2px rgba(11, 31, 58, 0.06);
+    --shadow-md: 0 4px 12px rgba(11, 31, 58, 0.08);
+    --shadow-lg: 0 12px 32px rgba(11, 31, 58, 0.12);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -36,7 +38,10 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Phone frame for desktop preview */
+  button { font-family: inherit; cursor: pointer; }
+  input, textarea, select { font-family: inherit; }
+
+  /* Phone frame */
   .device-wrap {
     height: 100vh;
     display: flex;
@@ -45,7 +50,6 @@
     background: radial-gradient(ellipse at top, #3a3a3a 0%, #1a1a1a 100%);
     padding: 20px;
   }
-
   .device {
     width: 100%;
     max-width: 420px;
@@ -59,7 +63,6 @@
     display: flex;
     flex-direction: column;
   }
-
   @media (max-width: 500px) {
     .device-wrap { padding: 0; }
     .device { max-width: none; max-height: none; border-radius: 0; box-shadow: none; height: 100vh; }
@@ -78,6 +81,7 @@
     color: var(--ink);
     position: relative;
     z-index: 10;
+    background: transparent;
   }
   .status-bar.dark { color: var(--cream); }
   .status-icons { display: flex; gap: 6px; align-items: center; }
@@ -95,12 +99,12 @@
   .screen {
     display: none;
     min-height: 100%;
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.25s ease;
   }
   .screen.active { display: block; }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
@@ -118,24 +122,18 @@
   .onboard::before {
     content: '';
     position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 300px;
-    height: 300px;
+    top: -100px; right: -100px;
+    width: 300px; height: 300px;
     background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
-    opacity: 0.15;
-    border-radius: 50%;
+    opacity: 0.15; border-radius: 50%;
   }
   .onboard::after {
     content: '';
     position: absolute;
-    bottom: -150px;
-    left: -100px;
-    width: 400px;
-    height: 400px;
+    bottom: -150px; left: -100px;
+    width: 400px; height: 400px;
     background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
-    opacity: 0.08;
-    border-radius: 50%;
+    opacity: 0.08; border-radius: 50%;
   }
 
   .logo-mark {
@@ -147,8 +145,7 @@
     z-index: 2;
   }
   .logo-star {
-    width: 32px;
-    height: 32px;
+    width: 32px; height: 32px;
     background: var(--gold);
     clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   }
@@ -194,7 +191,6 @@
     color: rgba(250, 246, 238, 0.7);
     max-width: 320px;
   }
-
   .onboard-cta {
     display: flex;
     flex-direction: column;
@@ -210,42 +206,27 @@
     padding: 18px 24px;
     font-size: 16px;
     font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    transition: transform 0.15s, opacity 0.15s;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
   }
   .btn:active { transform: scale(0.97); }
-  .btn-gold {
-    background: var(--gold);
-    color: var(--navy-deep);
-  }
-  .btn-gold:hover { background: var(--gold-bright); }
-  .btn-ghost {
-    background: transparent;
-    color: var(--cream);
-    border: 1px solid rgba(250, 246, 238, 0.2);
-  }
-  .btn-navy {
-    background: var(--navy);
-    color: var(--cream);
-  }
-  .btn-outline {
-    background: transparent;
-    color: var(--navy);
-    border: 1.5px solid var(--navy);
-  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-gold { background: var(--gold); color: var(--navy-deep); }
+  .btn-ghost { background: transparent; color: var(--cream); border: 1px solid rgba(250, 246, 238, 0.2); }
+  .btn-navy { background: var(--navy); color: var(--cream); }
+  .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--navy); }
   .btn-block { width: 100%; }
   .btn-sm { padding: 10px 16px; font-size: 14px; border-radius: 10px; }
+  .btn-danger-outline { background: transparent; color: var(--danger); border: 1.5px solid var(--danger); }
 
   /* ============ PLANS SCREEN ============ */
   .plans-screen {
     background: var(--cream);
     min-height: 100%;
-    padding-bottom: 100px;
+    padding-bottom: 120px;
   }
   .plans-header {
     padding: 16px 24px 8px;
@@ -254,20 +235,17 @@
     justify-content: space-between;
   }
   .back-btn {
-    width: 40px;
-    height: 40px;
+    width: 40px; height: 40px;
     border-radius: 50%;
     background: rgba(11, 31, 58, 0.06);
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
-    cursor: pointer;
     color: var(--navy);
   }
-  .plans-intro {
-    padding: 24px 28px 8px;
-  }
+  .back-btn:active { background: rgba(11, 31, 58, 0.12); }
+  .plans-intro { padding: 24px 28px 8px; }
   .eyebrow {
     font-size: 11px;
     text-transform: uppercase;
@@ -293,6 +271,29 @@
     margin-bottom: 8px;
   }
 
+  .plan-toggle {
+    display: flex;
+    background: rgba(11, 31, 58, 0.06);
+    border-radius: 12px;
+    padding: 4px;
+    margin: 0 24px 8px;
+  }
+  .toggle-opt {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    border-radius: 8px;
+  }
+  .toggle-opt.active {
+    background: white;
+    color: var(--navy-deep);
+    box-shadow: var(--shadow-sm);
+  }
+
   .plan-cards {
     padding: 20px;
     display: flex;
@@ -303,30 +304,18 @@
     border-radius: 20px;
     padding: 24px;
     position: relative;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s, box-shadow 0.2s;
     overflow: hidden;
   }
   .plan-card:active { transform: scale(0.98); }
-  .plan-basic {
-    background: white;
-    border: 1px solid var(--line);
-  }
-  .plan-standard {
-    background: var(--navy);
-    color: var(--cream);
-    box-shadow: 0 8px 24px rgba(11, 31, 58, 0.2);
-  }
-  .plan-premium {
-    background: linear-gradient(135deg, var(--gold) 0%, #C99935 100%);
-    color: var(--navy-deep);
-    box-shadow: 0 8px 24px rgba(212, 164, 69, 0.3);
-  }
+  .plan-basic { background: white; border: 1px solid var(--line); }
+  .plan-standard { background: var(--navy); color: var(--cream); box-shadow: 0 8px 24px rgba(11, 31, 58, 0.2); }
+  .plan-premium { background: linear-gradient(135deg, var(--gold) 0%, #C99935 100%); color: var(--navy-deep); box-shadow: 0 8px 24px rgba(212, 164, 69, 0.3); }
+  .plan-card.current { outline: 3px solid var(--success); outline-offset: -3px; }
 
   .plan-badge {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 16px; right: 16px;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -335,14 +324,9 @@
     border-radius: 20px;
     background: rgba(255,255,255,0.2);
   }
-  .plan-standard .plan-badge {
-    background: var(--gold);
-    color: var(--navy-deep);
-  }
-  .plan-premium .plan-badge {
-    background: rgba(11, 31, 58, 0.15);
-    color: var(--navy-deep);
-  }
+  .plan-standard .plan-badge { background: var(--gold); color: var(--navy-deep); }
+  .plan-premium .plan-badge { background: rgba(11, 31, 58, 0.15); color: var(--navy-deep); }
+  .plan-card.current .plan-badge { background: var(--success); color: white; }
 
   .plan-name {
     font-family: 'Fraunces', serif;
@@ -366,16 +350,14 @@
     font-weight: 400;
     letter-spacing: -0.04em;
   }
-  .plan-price .period {
-    font-size: 14px;
-    opacity: 0.7;
-  }
+  .plan-price .period { font-size: 14px; opacity: 0.7; }
 
   .plan-features {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-bottom: 20px;
   }
   .plan-features li {
     font-size: 14px;
@@ -386,8 +368,7 @@
   }
   .plan-features li::before {
     content: '';
-    width: 16px;
-    height: 16px;
+    width: 16px; height: 16px;
     flex-shrink: 0;
     margin-top: 2px;
     border-radius: 50%;
@@ -402,7 +383,19 @@
     background-color: rgba(255,255,255,0.95);
   }
 
-  /* ============ MAIN APP ============ */
+  .plan-select-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+  }
+  .plan-basic .plan-select-btn { background: var(--navy); color: var(--cream); }
+  .plan-standard .plan-select-btn { background: var(--gold); color: var(--navy-deep); }
+  .plan-premium .plan-select-btn { background: var(--navy-deep); color: var(--cream); }
+
+  /* ============ MAIN APP HOME ============ */
   .app-screen { background: var(--cream); min-height: 100%; padding-bottom: 100px; }
 
   .top-bar {
@@ -411,11 +404,7 @@
     justify-content: space-between;
     align-items: center;
   }
-  .greeting-block .hello {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 2px;
-  }
+  .greeting-block .hello { font-size: 13px; color: var(--muted); margin-bottom: 2px; }
   .greeting-block .name {
     font-family: 'Fraunces', serif;
     font-size: 22px;
@@ -424,8 +413,7 @@
     letter-spacing: -0.02em;
   }
   .avatar {
-    width: 44px;
-    height: 44px;
+    width: 44px; height: 44px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
     display: flex;
@@ -435,9 +423,10 @@
     font-weight: 600;
     color: var(--navy-deep);
     font-size: 16px;
+    border: none;
   }
 
-  /* Plan card on home */
+  /* Home plan card */
   .home-plan-card {
     margin: 20px 20px 0;
     background: var(--navy);
@@ -450,22 +439,10 @@
   .home-plan-card::before {
     content: '';
     position: absolute;
-    top: -50px;
-    right: -50px;
-    width: 180px;
-    height: 180px;
+    top: -50px; right: -50px;
+    width: 180px; height: 180px;
     background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
     opacity: 0.2;
-  }
-  .home-plan-card::after {
-    content: '';
-    position: absolute;
-    bottom: -30px;
-    left: -30px;
-    width: 120px;
-    height: 120px;
-    border: 1px solid rgba(212, 164, 69, 0.15);
-    border-radius: 50%;
   }
   .plan-status-row {
     display: flex;
@@ -486,15 +463,10 @@
     font-weight: 600;
   }
   .plan-tier .dot {
-    width: 6px;
-    height: 6px;
+    width: 6px; height: 6px;
     background: var(--gold);
     border-radius: 50%;
     box-shadow: 0 0 8px var(--gold);
-  }
-  .plan-actions {
-    display: flex;
-    gap: 8px;
   }
   .plan-action-btn {
     background: rgba(255,255,255,0.08);
@@ -504,7 +476,6 @@
     border-radius: 20px;
     font-size: 11px;
     font-weight: 500;
-    cursor: pointer;
   }
   .plan-next-service {
     font-size: 13px;
@@ -565,10 +536,8 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    cursor: pointer;
     background: none;
     border: none;
-    font-family: inherit;
   }
 
   /* Service grid */
@@ -583,8 +552,8 @@
     border-radius: 18px;
     padding: 18px;
     border: 1px solid var(--line);
-    cursor: pointer;
-    transition: all 0.2s ease;
+    text-align: left;
+    transition: all 0.15s;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -592,8 +561,7 @@
   }
   .service-tile:active { transform: scale(0.97); background: var(--paper); }
   .service-icon {
-    width: 36px;
-    height: 36px;
+    width: 36px; height: 36px;
     border-radius: 10px;
     background: var(--paper);
     display: flex;
@@ -601,21 +569,9 @@
     justify-content: center;
     color: var(--navy);
   }
-  .service-tile.featured .service-icon {
-    background: var(--gold);
-    color: var(--navy-deep);
-  }
-  .service-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--navy-deep);
-    line-height: 1.2;
-  }
-  .service-meta {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
+  .service-tile.featured .service-icon { background: var(--gold); color: var(--navy-deep); }
+  .service-name { font-size: 14px; font-weight: 600; color: var(--navy-deep); line-height: 1.2; }
+  .service-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
   /* Active jobs */
   .job-list { padding: 0 20px; display: flex; flex-direction: column; gap: 10px; }
@@ -627,11 +583,12 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    cursor: pointer;
+    text-align: left;
+    width: 100%;
   }
+  .job-card:active { background: var(--paper); }
   .job-status-icon {
-    width: 44px;
-    height: 44px;
+    width: 44px; height: 44px;
     border-radius: 12px;
     flex-shrink: 0;
     display: flex;
@@ -641,6 +598,7 @@
     color: var(--navy);
   }
   .job-status-icon.live { background: rgba(212, 164, 69, 0.15); color: var(--gold); }
+  .job-status-icon.done { background: rgba(22, 163, 74, 0.15); color: var(--success); }
   .job-info { flex: 1; min-width: 0; }
   .job-title {
     font-size: 14px;
@@ -663,19 +621,36 @@
     font-weight: 600;
     padding: 3px 8px;
     border-radius: 20px;
-    background: var(--paper);
-    color: var(--navy);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-  .job-pill.live {
-    background: var(--gold);
+  .job-pill.live { background: var(--gold); color: var(--navy-deep); }
+  .job-pill.scheduled { background: rgba(11, 31, 58, 0.08); color: var(--navy); }
+  .job-pill.done { background: rgba(22, 163, 74, 0.12); color: var(--success); }
+  .job-pill.pending { background: rgba(212, 164, 69, 0.15); color: #B8902F; }
+
+  /* Empty state */
+  .empty-state {
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .empty-icon-lg {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--paper);
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+  }
+  .empty-title-text {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
     color: var(--navy-deep);
+    margin-bottom: 6px;
   }
-  .job-pill.scheduled {
-    background: rgba(11, 31, 58, 0.08);
-    color: var(--navy);
-  }
+  .empty-sub-text { font-size: 13px; color: var(--muted); line-height: 1.5; }
 
   /* CTA banner */
   .cta-banner {
@@ -690,10 +665,8 @@
   .cta-banner::after {
     content: '';
     position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 140px;
-    height: 140px;
+    top: -40px; right: -40px;
+    width: 140px; height: 140px;
     border: 1px solid rgba(11, 31, 58, 0.15);
     border-radius: 50%;
   }
@@ -721,8 +694,6 @@
     border-radius: 12px;
     font-size: 13px;
     font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
   }
 
   /* ============ REQUEST FLOW ============ */
@@ -746,10 +717,10 @@
     gap: 6px;
   }
   .step-dot {
-    flex: 1;
-    height: 3px;
+    flex: 1; height: 3px;
     border-radius: 3px;
     background: rgba(11, 31, 58, 0.1);
+    transition: background 0.3s;
   }
   .step-dot.active { background: var(--gold); }
   .step-dot.done { background: var(--navy); }
@@ -778,7 +749,6 @@
     margin-bottom: 24px;
     line-height: 1.5;
   }
-
   .field-label {
     font-size: 13px;
     font-weight: 600;
@@ -786,38 +756,47 @@
     margin-bottom: 8px;
     display: block;
   }
-  .text-input, .text-area {
+  .text-input, .text-area, .select-input {
     width: 100%;
     background: white;
     border: 1px solid var(--line);
     border-radius: 14px;
     padding: 16px;
     font-size: 15px;
-    font-family: inherit;
     color: var(--ink);
     margin-bottom: 16px;
     resize: none;
+    -webkit-appearance: none;
+    appearance: none;
   }
-  .text-input:focus, .text-area:focus {
+  .text-input:focus, .text-area:focus, .select-input:focus {
     outline: none;
     border-color: var(--gold);
   }
   .text-area { min-height: 120px; }
+  .select-input {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    padding-right: 44px;
+  }
 
+  /* Photo upload */
   .photo-upload {
     background: white;
     border: 1.5px dashed rgba(11, 31, 58, 0.15);
     border-radius: 16px;
-    padding: 32px 16px;
+    padding: 24px 16px;
     text-align: center;
     margin-bottom: 16px;
+    transition: all 0.2s;
+    width: 100%;
     cursor: pointer;
-    transition: all 0.2s ease;
   }
-  .photo-upload:hover { border-color: var(--gold); background: rgba(212, 164, 69, 0.04); }
+  .photo-upload:active { border-color: var(--gold); background: rgba(212, 164, 69, 0.04); }
   .photo-icon {
-    width: 48px;
-    height: 48px;
+    width: 48px; height: 48px;
     border-radius: 50%;
     background: var(--paper);
     display: flex;
@@ -826,15 +805,40 @@
     margin: 0 auto 12px;
     color: var(--navy);
   }
-  .photo-text {
-    font-size: 14px;
-    color: var(--navy-deep);
-    font-weight: 500;
+  .photo-text { font-size: 14px; color: var(--navy-deep); font-weight: 500; }
+  .photo-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .photo-previews {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
   }
-  .photo-sub {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 4px;
+  .photo-preview {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: var(--paper);
+  }
+  .photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .photo-remove {
+    position: absolute;
+    top: 4px; right: 4px;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
   }
 
   .urgency-options {
@@ -850,22 +854,52 @@
     padding: 14px;
     cursor: pointer;
     text-align: left;
-    transition: all 0.15s ease;
+    transition: all 0.15s;
   }
-  .urgency-opt.selected {
-    border-color: var(--gold);
-    background: rgba(212, 164, 69, 0.05);
+  .urgency-opt.selected { border-color: var(--gold); background: rgba(212, 164, 69, 0.05); }
+  .urgency-name { font-size: 14px; font-weight: 600; color: var(--navy-deep); margin-bottom: 2px; }
+  .urgency-time { font-size: 11px; color: var(--muted); }
+
+  /* Schedule date picker */
+  .date-row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
   }
-  .urgency-name {
-    font-size: 14px;
-    font-weight: 600;
+  .date-row::-webkit-scrollbar { display: none; }
+  .date-chip {
+    flex-shrink: 0;
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 12px 16px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 70px;
+  }
+  .date-chip.selected { border-color: var(--gold); background: rgba(212, 164, 69, 0.05); }
+  .date-day { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .date-num { font-family: 'Fraunces', serif; font-size: 18px; color: var(--navy-deep); margin-top: 2px; }
+
+  .time-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .time-chip {
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    font-size: 13px;
     color: var(--navy-deep);
-    margin-bottom: 2px;
   }
-  .urgency-time {
-    font-size: 11px;
-    color: var(--muted);
-  }
+  .time-chip.selected { border-color: var(--gold); background: rgba(212, 164, 69, 0.05); color: var(--navy-deep); font-weight: 600; }
 
   /* ============ JOB DETAIL ============ */
   .job-detail-screen { background: var(--cream); min-height: 100%; padding-bottom: 100px; }
@@ -880,10 +914,8 @@
   .job-hero::before {
     content: '';
     position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 250px;
-    height: 250px;
+    top: -100px; right: -100px;
+    width: 250px; height: 250px;
     background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
     opacity: 0.1;
   }
@@ -896,15 +928,13 @@
     z-index: 2;
   }
   .back-btn-light {
-    width: 40px;
-    height: 40px;
+    width: 40px; height: 40px;
     border-radius: 50%;
     background: rgba(255,255,255,0.08);
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
-    cursor: pointer;
     color: var(--cream);
   }
   .job-hero-tag {
@@ -938,8 +968,7 @@
     z-index: 2;
   }
   .tech-avatar {
-    width: 48px;
-    height: 48px;
+    width: 48px; height: 48px;
     border-radius: 50%;
     background: var(--gold);
     display: flex;
@@ -951,21 +980,21 @@
   }
   .tech-name { font-size: 15px; font-weight: 600; }
   .tech-role { font-size: 12px; color: rgba(250,246,238,0.6); margin-top: 2px; }
-  .tech-eta {
-    margin-left: auto;
-    text-align: right;
-  }
+  .tech-eta { margin-left: auto; text-align: right; }
   .eta-time {
     font-family: 'Fraunces', serif;
     font-size: 18px;
     color: var(--gold);
     font-weight: 500;
   }
-  .eta-label { font-size: 10px; color: rgba(250,246,238,0.6); text-transform: uppercase; letter-spacing: 0.1em; }
-
-  .timeline {
-    padding: 28px 24px 0;
+  .eta-label {
+    font-size: 10px;
+    color: rgba(250,246,238,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
+
+  .timeline { padding: 28px 24px 0; }
   .timeline-title {
     font-family: 'Fraunces', serif;
     font-size: 18px;
@@ -982,15 +1011,12 @@
   .timeline-item:not(:last-child)::before {
     content: '';
     position: absolute;
-    left: 11px;
-    top: 28px;
-    bottom: 0;
-    width: 2px;
+    left: 11px; top: 28px;
+    bottom: 0; width: 2px;
     background: var(--line);
   }
   .timeline-dot {
-    width: 24px;
-    height: 24px;
+    width: 24px; height: 24px;
     border-radius: 50%;
     background: white;
     border: 2px solid var(--line);
@@ -998,10 +1024,7 @@
     position: relative;
     z-index: 1;
   }
-  .timeline-item.done .timeline-dot {
-    background: var(--navy);
-    border-color: var(--navy);
-  }
+  .timeline-item.done .timeline-dot { background: var(--navy); border-color: var(--navy); }
   .timeline-item.current .timeline-dot {
     background: var(--gold);
     border-color: var(--gold);
@@ -1009,16 +1032,8 @@
   }
   .timeline-item.current::before { background: var(--line); }
   .timeline-content { flex: 1; padding-top: 2px; }
-  .timeline-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--navy-deep);
-  }
-  .timeline-time {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
+  .timeline-name { font-size: 14px; font-weight: 600; color: var(--navy-deep); }
+  .timeline-time { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
   .job-actions {
     padding: 24px;
@@ -1028,13 +1043,9 @@
 
   /* ============ PROFILE/SUBSCRIPTION ============ */
   .profile-screen { background: var(--cream); min-height: 100%; padding-bottom: 100px; }
-  .profile-header {
-    padding: 24px 24px 0;
-    text-align: center;
-  }
+  .profile-header { padding: 24px 24px 0; text-align: center; }
   .profile-avatar {
-    width: 80px;
-    height: 80px;
+    width: 80px; height: 80px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
     margin: 0 auto 16px;
@@ -1067,10 +1078,8 @@
   .subscription-card::after {
     content: '';
     position: absolute;
-    top: -60px;
-    right: -60px;
-    width: 200px;
-    height: 200px;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
     border: 1px solid rgba(11, 31, 58, 0.15);
     border-radius: 50%;
   }
@@ -1122,30 +1131,33 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    cursor: pointer;
     border-bottom: 1px solid var(--line);
+    width: 100%;
+    background: white;
+    border-left: none;
+    border-right: none;
+    text-align: left;
   }
   .menu-item:last-child { border-bottom: none; }
   .menu-item:active { background: var(--paper); }
   .menu-icon {
-    width: 36px;
-    height: 36px;
+    width: 36px; height: 36px;
     border-radius: 10px;
     background: var(--paper);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--navy);
+    flex-shrink: 0;
   }
   .menu-label { flex: 1; font-size: 15px; color: var(--navy-deep); font-weight: 500; }
   .menu-chevron { color: var(--muted); }
+  .menu-value { font-size: 13px; color: var(--muted); }
 
   /* ============ BOTTOM NAV ============ */
   .tab-bar {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -1165,35 +1177,26 @@
     align-items: center;
     gap: 4px;
     padding: 6px 10px;
-    cursor: pointer;
     color: var(--muted);
-    font-family: inherit;
-    transition: color 0.2s ease;
+    transition: color 0.2s;
   }
   .tab.active { color: var(--navy-deep); }
   .tab.fab {
     background: var(--navy);
     color: var(--cream);
-    width: 56px;
-    height: 56px;
+    width: 56px; height: 56px;
     border-radius: 50%;
     margin-top: -20px;
     box-shadow: 0 8px 20px rgba(11, 31, 58, 0.25);
     padding: 0;
   }
   .tab.fab .tab-label { display: none; }
-  .tab-label {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
+  .tab-label { font-size: 10px; font-weight: 600; letter-spacing: 0.02em; }
 
-  /* Bottom action bar (request flow) */
+  /* Bottom action bar */
   .bottom-action {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     padding: 16px 24px 32px;
     background: linear-gradient(180deg, transparent 0%, var(--cream) 30%);
     z-index: 50;
@@ -1202,8 +1205,7 @@
   /* Toast */
   .toast {
     position: absolute;
-    top: 60px;
-    left: 50%;
+    top: 60px; left: 50%;
     transform: translateX(-50%) translateY(-100px);
     background: var(--navy-deep);
     color: var(--cream);
@@ -1213,44 +1215,254 @@
     font-weight: 500;
     box-shadow: var(--shadow-lg);
     opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 200;
+    transition: all 0.3s;
+    z-index: 1000;
     display: flex;
     align-items: center;
     gap: 8px;
     white-space: nowrap;
+    max-width: 90%;
   }
-  .toast.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .toast.success { background: var(--success); }
+  .toast.error { background: var(--danger); }
+
+  /* ============ MODALS ============ */
+  .modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 31, 58, 0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 500;
+    animation: fadeOverlay 0.2s ease;
+  }
+  .modal-overlay.show { display: flex; }
+  @keyframes fadeOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
-  /* Scrollable plan select */
-  .plan-toggle {
-    display: flex;
-    background: rgba(11, 31, 58, 0.06);
-    border-radius: 12px;
-    padding: 4px;
-    margin: 0 24px 8px;
+  .modal {
+    width: 100%;
+    background: var(--cream);
+    border-radius: 28px 28px 0 0;
+    padding: 24px 24px 32px;
+    max-height: 80%;
+    overflow-y: auto;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .toggle-opt {
-    flex: 1;
-    background: transparent;
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .modal-handle {
+    width: 36px; height: 4px;
+    background: rgba(11, 31, 58, 0.2);
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+  .modal-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--navy-deep);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .modal-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  /* Photo source modal */
+  .photo-options { display: flex; flex-direction: column; gap: 10px; }
+  .photo-option-btn {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+  }
+  .photo-option-btn:active { background: var(--paper); }
+  .photo-option-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+  .photo-option-name { font-size: 15px; font-weight: 600; color: var(--navy-deep); }
+  .photo-option-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* Confirm modal */
+  .confirm-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .confirm-actions .btn { flex: 1; }
+
+  /* Spinner */
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ============ JOBS LIST SCREEN ============ */
+  .jobs-screen { background: var(--cream); min-height: 100%; padding-bottom: 100px; }
+  .jobs-header {
+    padding: 24px 24px 16px;
+  }
+  .jobs-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    color: var(--navy-deep);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .jobs-sub { font-size: 14px; color: var(--muted); }
+
+  .jobs-tabs {
+    padding: 0 24px 16px;
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .jobs-tab {
+    background: none;
     border: none;
-    padding: 8px;
-    font-size: 12px;
+    padding: 8px 4px 12px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--muted);
+    position: relative;
+  }
+  .jobs-tab.active { color: var(--navy-deep); }
+  .jobs-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+  }
+  .jobs-tab-count {
+    font-size: 11px;
+    background: rgba(11, 31, 58, 0.08);
+    padding: 2px 6px;
     border-radius: 8px;
-    cursor: pointer;
-    font-family: inherit;
+    margin-left: 4px;
   }
-  .toggle-opt.active {
-    background: white;
-    color: var(--navy-deep);
-    box-shadow: var(--shadow-sm);
-  }
+  .jobs-tab.active .jobs-tab-count { background: var(--gold); color: var(--navy-deep); }
 
+  /* Quote card */
+  .quote-card {
+    background: white;
+    margin: 16px 20px 0;
+    border-radius: 18px;
+    padding: 20px;
+    border: 1px solid var(--line);
+  }
+  .quote-status {
+    display: inline-block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .quote-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy-deep);
+    margin-bottom: 12px;
+  }
+  .quote-lines {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .quote-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 13px;
+  }
+  .quote-line .label { color: var(--muted); }
+  .quote-line .value { color: var(--navy-deep); font-weight: 500; }
+  .quote-total {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--navy-deep);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .quote-actions { display: flex; gap: 8px; }
+  .quote-actions .btn { flex: 1; padding: 12px; font-size: 14px; }
+
+  /* Toggle switch */
+  .toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 26px;
+    background: rgba(11, 31, 58, 0.15);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle-switch.on { background: var(--gold); }
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 20px; height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .toggle-switch.on::after { transform: translateX(18px); }
+
+  /* Search */
+  .search-wrap {
+    padding: 0 24px 16px;
+    position: relative;
+  }
+  .search-input {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 14px 14px 44px;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .search-input:focus { outline: none; border-color: var(--gold); }
+  .search-icon {
+    position: absolute;
+    left: 38px; top: 14px;
+    color: var(--muted);
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
@@ -1260,7 +1472,7 @@
 
     <!-- Status bar -->
     <div class="status-bar" id="statusBar">
-      <span>9:41</span>
+      <span id="statusTime">9:41</span>
       <span class="status-icons">
         <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="0.5"/><rect x="5" y="5" width="3" height="7" rx="0.5"/><rect x="10" y="2" width="3" height="10" rx="0.5"/><rect x="15" y="0" width="3" height="12" rx="0.5"/></svg>
         <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2C4.5 2 1.5 4 0 6.5c1.5 2.5 4.5 4.5 8 4.5s6.5-2 8-4.5C14.5 4 11.5 2 8 2z" opacity="0.4"/><path d="M8 4a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg>
@@ -1270,8 +1482,8 @@
 
     <!-- Toast -->
     <div class="toast" id="toast">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      <span id="toastText">Request submitted</span>
+      <svg id="toastIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <span id="toastText">Done</span>
     </div>
 
     <!-- App body -->
@@ -1290,11 +1502,11 @@
             <p class="hero-sub">One subscription. Every home service. Vetted local pros across the DFW metroplex, on call when you need them.</p>
           </div>
           <div class="onboard-cta">
-            <button class="btn btn-gold btn-block" onclick="goTo('screen-plans')">
+            <button class="btn btn-gold btn-block" id="ctaPlans">
               See Membership Plans
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
-            <button class="btn btn-ghost btn-block" onclick="goTo('screen-home')">I already have an account</button>
+            <button class="btn btn-ghost btn-block" id="ctaSignIn">I already have an account</button>
           </div>
         </div>
       </div>
@@ -1303,7 +1515,7 @@
       <div class="screen" id="screen-plans">
         <div class="plans-screen">
           <div class="plans-header">
-            <button class="back-btn" onclick="goTo('screen-onboard')">
+            <button class="back-btn" data-back>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             </button>
           </div>
@@ -1314,60 +1526,12 @@
           </div>
 
           <div class="plan-toggle">
-            <button class="toggle-opt active">Monthly</button>
-            <button class="toggle-opt">Yearly · Save 15%</button>
+            <button class="toggle-opt active" data-billing="monthly">Monthly</button>
+            <button class="toggle-opt" data-billing="yearly">Yearly · Save 15%</button>
           </div>
 
-          <div class="plan-cards">
-            <!-- BASIC -->
-            <div class="plan-card plan-basic" onclick="selectPlan('Basic')">
-              <div class="plan-name">Basic</div>
-              <div class="plan-price">
-                <span class="amount">$29</span>
-                <span class="period">/ month</span>
-              </div>
-              <ul class="plan-features">
-                <li>Exterior walkaround inspection (1x per year)</li>
-                <li>Interior walkaround inspection (1x per year)</li>
-                <li>25% off all repairs &amp; services</li>
-                <li>Priority service scheduling (48–72 hr)</li>
-              </ul>
-            </div>
-
-            <!-- STANDARD -->
-            <div class="plan-card plan-standard" onclick="selectPlan('Standard')">
-              <div class="plan-badge">Most Popular</div>
-              <div class="plan-name" style="color: var(--gold);">Standard</div>
-              <div class="plan-price">
-                <span class="amount">$79</span>
-                <span class="period">/ month</span>
-              </div>
-              <ul class="plan-features">
-                <li>1 free service per month</li>
-                <li>Exterior walkarounds (4x per year)</li>
-                <li>Interior walkarounds (4x per year)</li>
-                <li>Priority service (24–48 hr)</li>
-                <li>30% off repairs (2x per month)</li>
-              </ul>
-            </div>
-
-            <!-- PREMIUM -->
-            <div class="plan-card plan-premium" onclick="selectPlan('Premium')">
-              <div class="plan-badge">White Glove</div>
-              <div class="plan-name">Premium</div>
-              <div class="plan-price">
-                <span class="amount">$149</span>
-                <span class="period">/ month</span>
-              </div>
-              <ul class="plan-features">
-                <li>2 free services per month</li>
-                <li>Exterior walkarounds (6x per year)</li>
-                <li>Interior walkarounds (6x per year)</li>
-                <li>Seasonal prep (winter &amp; summer)</li>
-                <li>40% off repairs (3x per month)</li>
-                <li>Emergency same / next-day response</li>
-              </ul>
-            </div>
+          <div class="plan-cards" id="planCards">
+            <!-- Generated by JS -->
           </div>
         </div>
       </div>
@@ -1377,33 +1541,31 @@
         <div class="app-screen">
           <div class="top-bar">
             <div class="greeting-block">
-              <div class="hello">Good morning,</div>
-              <div class="name">Jordan</div>
+              <div class="hello" id="greetingText">Good morning,</div>
+              <div class="name" id="userName">Jordan</div>
             </div>
-            <div class="avatar" onclick="goTo('screen-profile')">J</div>
+            <button class="avatar" data-nav="screen-profile" id="avatarInitial">J</button>
           </div>
 
           <!-- Plan card -->
           <div class="home-plan-card">
             <div class="plan-status-row">
-              <div class="plan-tier"><span class="dot"></span> Standard Member</div>
-              <div class="plan-actions">
-                <button class="plan-action-btn">Upgrade</button>
-              </div>
+              <div class="plan-tier"><span class="dot"></span> <span id="homeMemberTier">Standard Member</span></div>
+              <button class="plan-action-btn" data-nav="screen-plans">Upgrade</button>
             </div>
             <div class="plan-next-service">Your next free service is available</div>
-            <div class="plan-headline">Schedule your<br>July walkaround.</div>
+            <div class="plan-headline">Schedule your<br>monthly service.</div>
             <div class="plan-stats">
               <div class="stat-item">
-                <div class="stat-num">1</div>
+                <div class="stat-num" id="statFree">1</div>
                 <div class="stat-label">Free Service</div>
               </div>
               <div class="stat-item">
-                <div class="stat-num">2</div>
-                <div class="stat-label">30% Discounts</div>
+                <div class="stat-num" id="statDiscount">2</div>
+                <div class="stat-label">Discounts</div>
               </div>
               <div class="stat-item">
-                <div class="stat-num">24h</div>
+                <div class="stat-num" id="statPriority">24h</div>
                 <div class="stat-label">Priority</div>
               </div>
             </div>
@@ -1412,108 +1574,60 @@
           <!-- Services -->
           <div class="section-head">
             <div class="section-title">Request a Service</div>
-            <button class="section-link">See All</button>
           </div>
-          <div class="service-grid">
-            <div class="service-tile featured" onclick="goTo('screen-request')">
-              <div class="service-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-              </div>
-              <div>
-                <div class="service-name">Home Cleaning</div>
-                <div class="service-meta">Plan service · Free</div>
-              </div>
-            </div>
-            <div class="service-tile" onclick="goTo('screen-request')">
-              <div class="service-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/><path d="M20 8v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8z"/></svg>
-              </div>
-              <div>
-                <div class="service-name">Plumbing</div>
-                <div class="service-meta">30% off with plan</div>
-              </div>
-            </div>
-            <div class="service-tile" onclick="goTo('screen-request')">
-              <div class="service-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              </div>
-              <div>
-                <div class="service-name">Electrical</div>
-                <div class="service-meta">Licensed in TX</div>
-              </div>
-            </div>
-            <div class="service-tile" onclick="goTo('screen-request')">
-              <div class="service-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-              </div>
-              <div>
-                <div class="service-name">HVAC</div>
-                <div class="service-meta">Texas heat? We got you</div>
-              </div>
-            </div>
-            <div class="service-tile" onclick="goTo('screen-request')">
-              <div class="service-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22V12a10 10 0 0 1 20 0v10"/><path d="M2 17h20"/></svg>
-              </div>
-              <div>
-                <div class="service-name">Lawn Care</div>
-                <div class="service-meta">Plan service · Free</div>
-              </div>
-            </div>
-            <div class="service-tile" onclick="goTo('screen-request')">
-              <div class="service-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M2 12h20M12 2v20"/></svg>
-              </div>
-              <div>
-                <div class="service-name">Handyman</div>
-                <div class="service-meta">Small repairs</div>
-              </div>
-            </div>
+          <div class="service-grid" id="serviceGrid">
+            <!-- Generated by JS -->
           </div>
 
           <!-- Active jobs -->
           <div class="section-head">
             <div class="section-title">Your Active Jobs</div>
-            <button class="section-link">View All</button>
+            <button class="section-link" data-nav="screen-jobs">View All</button>
           </div>
-          <div class="job-list">
-            <div class="job-card" onclick="goTo('screen-job')">
-              <div class="job-status-icon live">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              </div>
-              <div class="job-info">
-                <div class="job-title">Kitchen sink leak repair</div>
-                <div class="job-meta"><span class="job-pill live">Tech En Route · 12 min</span></div>
-              </div>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--muted);"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-            <div class="job-card">
-              <div class="job-status-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              </div>
-              <div class="job-info">
-                <div class="job-title">AC tune-up &amp; filter change</div>
-                <div class="job-meta"><span class="job-pill scheduled">Scheduled · Mon 9 AM</span></div>
-              </div>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--muted);"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
+          <div class="job-list" id="homeJobsList">
+            <!-- Generated by JS -->
           </div>
 
           <!-- CTA -->
           <div class="cta-banner">
-            <div class="cta-eyebrow">Add On Services</div>
+            <div class="cta-eyebrow">Add-On Services</div>
             <div class="cta-title">Drywall, junk removal, deep clean, power washing &amp; more.</div>
-            <button class="cta-btn" onclick="goTo('screen-request')">Browse Services</button>
+            <button class="cta-btn" data-new-request>Browse Services</button>
           </div>
 
         </div>
       </div>
 
-      <!-- ===== REQUEST FLOW ===== -->
+      <!-- ===== JOBS LIST ===== -->
+      <div class="screen" id="screen-jobs">
+        <div class="jobs-screen">
+          <div class="jobs-header">
+            <h1 class="jobs-title">Your Jobs</h1>
+            <p class="jobs-sub">All your service requests, quotes, and history.</p>
+          </div>
+
+          <div class="search-wrap">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="search-input" id="jobSearch" placeholder="Search jobs..." type="text">
+          </div>
+
+          <div class="jobs-tabs">
+            <button class="jobs-tab active" data-job-filter="all">All <span class="jobs-tab-count" id="countAll">0</span></button>
+            <button class="jobs-tab" data-job-filter="active">Active <span class="jobs-tab-count" id="countActive">0</span></button>
+            <button class="jobs-tab" data-job-filter="completed">Done <span class="jobs-tab-count" id="countDone">0</span></button>
+          </div>
+
+          <div class="job-list" id="allJobsList" style="margin-top: 16px;">
+            <!-- Generated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== REQUEST FLOW STEP 1 ===== -->
       <div class="screen" id="screen-request">
         <div class="request-screen">
           <div class="request-header">
-            <button class="back-btn" onclick="goTo('screen-home')">
+            <button class="back-btn" data-back>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             </button>
             <h2>New Service Request</h2>
@@ -1529,38 +1643,165 @@
             <h2 class="request-title">What's going on?</h2>
             <p class="request-sub">Describe the issue — snap a photo if you can. We'll dispatch a vetted pro.</p>
 
-            <label class="field-label">Service type</label>
-            <input class="text-input" value="Plumbing — Kitchen sink" readonly>
+            <label class="field-label" for="serviceType">Service type</label>
+            <select class="select-input" id="serviceType">
+              <option value="">Choose a service...</option>
+              <option value="Plumbing">Plumbing</option>
+              <option value="Electrical">Electrical</option>
+              <option value="HVAC">HVAC / Air Conditioning</option>
+              <option value="Cleaning">Home Cleaning</option>
+              <option value="Lawn Care">Lawn Care</option>
+              <option value="Handyman">Handyman / Small Repairs</option>
+              <option value="Appliance">Appliance Install / Repair</option>
+              <option value="Drywall">Drywall Repair</option>
+              <option value="Junk Removal">Junk Removal</option>
+              <option value="Power Washing">Power Washing</option>
+              <option value="Gutter Cleaning">Gutter Cleaning</option>
+              <option value="Other">Other</option>
+            </select>
 
-            <label class="field-label">Describe the issue</label>
-            <textarea class="text-area" placeholder="Water dripping under the sink, started this morning...">Water dripping slowly under kitchen sink. Looks like the trap or supply line. Bowl underneath catching it for now.</textarea>
+            <label class="field-label" for="issueDesc">Describe the issue</label>
+            <textarea class="text-area" id="issueDesc" placeholder="Water dripping under the sink, started this morning..."></textarea>
 
             <label class="field-label">Photos (optional but helpful)</label>
-            <div class="photo-upload">
+
+            <!-- Hidden file inputs -->
+            <input type="file" id="photoCamera" accept="image/*" capture="environment" style="display:none;" multiple>
+            <input type="file" id="photoGallery" accept="image/*" style="display:none;" multiple>
+
+            <button class="photo-upload" id="addPhotoBtn" type="button">
               <div class="photo-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
               </div>
               <div class="photo-text">Add a photo</div>
-              <div class="photo-sub">Camera or upload from library</div>
-            </div>
+              <div class="photo-sub">Tap to use camera or photo library</div>
+            </button>
+
+            <div class="photo-previews" id="photoPreviews"></div>
 
             <label class="field-label">Urgency</label>
             <div class="urgency-options">
-              <div class="urgency-opt selected">
+              <button class="urgency-opt selected" data-urgency="standard" type="button">
                 <div class="urgency-name">Standard</div>
                 <div class="urgency-time">24–48 hours</div>
-              </div>
-              <div class="urgency-opt">
+              </button>
+              <button class="urgency-opt" data-urgency="emergency" type="button">
                 <div class="urgency-name">Emergency</div>
                 <div class="urgency-time">Same day · +$75</div>
-              </div>
+              </button>
             </div>
           </div>
 
           <div class="bottom-action">
-            <button class="btn btn-navy btn-block" onclick="submitRequest()">
-              Submit Request
+            <button class="btn btn-navy btn-block" id="requestStep1Next">
+              Continue
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== REQUEST STEP 2 (SCHEDULE) ===== -->
+      <div class="screen" id="screen-request-schedule">
+        <div class="request-screen">
+          <div class="request-header">
+            <button class="back-btn" data-nav="screen-request">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+            <h2>Pick a Time</h2>
+          </div>
+          <div class="step-progress">
+            <div class="step-dot done"></div>
+            <div class="step-dot active"></div>
+            <div class="step-dot"></div>
+          </div>
+
+          <div class="request-body">
+            <div class="request-eyebrow">Step 2 of 3</div>
+            <h2 class="request-title">When works?</h2>
+            <p class="request-sub">Pick a day and time window. Your assigned tech will arrive in that window.</p>
+
+            <label class="field-label">Select a day</label>
+            <div class="date-row" id="dateRow"></div>
+
+            <label class="field-label">Time window</label>
+            <div class="time-grid" id="timeGrid">
+              <button class="time-chip" data-time="8AM - 10AM">8AM – 10AM</button>
+              <button class="time-chip" data-time="10AM - 12PM">10AM – 12PM</button>
+              <button class="time-chip selected" data-time="12PM - 2PM">12PM – 2PM</button>
+              <button class="time-chip" data-time="2PM - 4PM">2PM – 4PM</button>
+              <button class="time-chip" data-time="4PM - 6PM">4PM – 6PM</button>
+              <button class="time-chip" data-time="6PM - 8PM">6PM – 8PM</button>
+            </div>
+
+            <label class="field-label" for="addressInput">Service address</label>
+            <input class="text-input" id="addressInput" type="text" placeholder="1234 Main St, Carrollton, TX">
+
+            <label class="field-label" for="accessNotes">Access notes (optional)</label>
+            <textarea class="text-area" id="accessNotes" placeholder="Gate code is 1234, dog in the yard, side entrance..." style="min-height:80px;"></textarea>
+          </div>
+
+          <div class="bottom-action">
+            <button class="btn btn-navy btn-block" id="requestStep2Next">
+              Review &amp; Submit
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== REQUEST STEP 3 (REVIEW) ===== -->
+      <div class="screen" id="screen-request-review">
+        <div class="request-screen">
+          <div class="request-header">
+            <button class="back-btn" data-nav="screen-request-schedule">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+            <h2>Review</h2>
+          </div>
+          <div class="step-progress">
+            <div class="step-dot done"></div>
+            <div class="step-dot done"></div>
+            <div class="step-dot active"></div>
+          </div>
+
+          <div class="request-body">
+            <div class="request-eyebrow">Step 3 of 3</div>
+            <h2 class="request-title">Looks good?</h2>
+            <p class="request-sub">Confirm and we'll dispatch a vetted pro to your home.</p>
+
+            <div style="background:white;border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:16px;">
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);">
+                <div style="color:var(--muted);font-size:13px;">Service</div>
+                <div style="color:var(--navy-deep);font-weight:600;font-size:13px;" id="reviewService">—</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);">
+                <div style="color:var(--muted);font-size:13px;">Urgency</div>
+                <div style="color:var(--navy-deep);font-weight:600;font-size:13px;" id="reviewUrgency">—</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);">
+                <div style="color:var(--muted);font-size:13px;">Date</div>
+                <div style="color:var(--navy-deep);font-weight:600;font-size:13px;" id="reviewDate">—</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);">
+                <div style="color:var(--muted);font-size:13px;">Time</div>
+                <div style="color:var(--navy-deep);font-weight:600;font-size:13px;" id="reviewTime">—</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 0;">
+                <div style="color:var(--muted);font-size:13px;">Address</div>
+                <div style="color:var(--navy-deep);font-weight:600;font-size:13px;text-align:right;max-width:60%;" id="reviewAddress">—</div>
+              </div>
+            </div>
+
+            <div style="background:rgba(212, 164, 69, 0.08);border:1px solid rgba(212, 164, 69, 0.3);border-radius:14px;padding:14px;font-size:13px;color:var(--navy-deep);line-height:1.5;">
+              <strong>Member benefit:</strong> Your <span id="reviewPlan">Standard</span> plan includes priority dispatch and member pricing on this service.
+            </div>
+          </div>
+
+          <div class="bottom-action">
+            <button class="btn btn-navy btn-block" id="requestSubmit">
+              <span id="submitBtnText">Submit Request</span>
+              <svg id="submitBtnIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </button>
           </div>
         </div>
@@ -1571,20 +1812,20 @@
         <div class="job-detail-screen">
           <div class="job-hero">
             <div class="job-hero-top">
-              <button class="back-btn-light" onclick="goTo('screen-home')">
+              <button class="back-btn-light" data-back>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
               </button>
             </div>
-            <div class="job-hero-tag">Service Request · #AG-2841</div>
-            <h1 class="job-hero-title">Kitchen sink<br>leak repair</h1>
-            <div class="tech-info">
-              <div class="tech-avatar">M</div>
+            <div class="job-hero-tag" id="jobIdTag">Service Request · #AG-2841</div>
+            <h1 class="job-hero-title" id="jobHeroTitle">Kitchen sink<br>leak repair</h1>
+            <div class="tech-info" id="techInfoBlock">
+              <div class="tech-avatar" id="techInitial">M</div>
               <div>
-                <div class="tech-name">Miguel R.</div>
-                <div class="tech-role">Master Plumber · 4.9 ★</div>
+                <div class="tech-name" id="techName">Miguel R.</div>
+                <div class="tech-role" id="techRole">Master Plumber · 4.9 ★</div>
               </div>
               <div class="tech-eta">
-                <div class="eta-time">12 min</div>
+                <div class="eta-time" id="techEta">12 min</div>
                 <div class="eta-label">ETA</div>
               </div>
             </div>
@@ -1592,52 +1833,24 @@
 
           <div class="timeline">
             <div class="timeline-title">Job Timeline</div>
-            <div class="timeline-item done">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <div class="timeline-name">Request submitted</div>
-                <div class="timeline-time">Today · 8:42 AM</div>
-              </div>
-            </div>
-            <div class="timeline-item done">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <div class="timeline-name">Tech assigned · Miguel R.</div>
-                <div class="timeline-time">Today · 9:01 AM</div>
-              </div>
-            </div>
-            <div class="timeline-item current">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <div class="timeline-name">En route to your home</div>
-                <div class="timeline-time">Arriving in 12 minutes</div>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <div class="timeline-name">Diagnosis &amp; quote</div>
-                <div class="timeline-time">Pending</div>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <div class="timeline-name">Work completed</div>
-                <div class="timeline-time">Pending</div>
-              </div>
+            <div id="jobTimeline">
+              <!-- Generated -->
             </div>
           </div>
 
           <div class="job-actions">
-            <button class="btn btn-outline" style="flex:1;">
+            <button class="btn btn-outline" style="flex:1;" id="jobMessageBtn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
               Message
             </button>
-            <button class="btn btn-navy" style="flex:1;">
+            <button class="btn btn-navy" style="flex:1;" id="jobCallBtn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
               Call Tech
             </button>
+          </div>
+
+          <div style="padding:0 24px 24px;">
+            <button class="btn btn-danger-outline btn-block" id="cancelJobBtn">Cancel Job</button>
           </div>
         </div>
       </div>
@@ -1646,63 +1859,90 @@
       <div class="screen" id="screen-profile">
         <div class="profile-screen">
           <div class="request-header" style="padding-bottom: 0;">
-            <button class="back-btn" onclick="goTo('screen-home')">
+            <button class="back-btn" data-back>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
             </button>
             <h2>Account</h2>
           </div>
 
           <div class="profile-header">
-            <div class="profile-avatar">J</div>
-            <div class="profile-name">Jordan Hayes</div>
-            <div class="profile-email">jordan.hayes@email.com · Carrollton, TX</div>
+            <div class="profile-avatar" id="profileInitial">J</div>
+            <div class="profile-name" id="profileName">Jordan Hayes</div>
+            <div class="profile-email" id="profileEmail">jordan.hayes@email.com · Carrollton, TX</div>
           </div>
 
           <div class="subscription-card">
             <div class="sub-tier">Active Subscription</div>
-            <div class="sub-plan-name">Standard · $79/mo</div>
+            <div class="sub-plan-name" id="subPlanDisplay">Standard · $79/mo</div>
             <div class="sub-meta">
               <div class="sub-meta-item">
                 <div class="label">Next Billing</div>
-                <div class="value">Jun 28</div>
+                <div class="value" id="nextBilling">Jun 28</div>
               </div>
               <div class="sub-meta-item">
                 <div class="label">Member Since</div>
-                <div class="value">Mar 2026</div>
+                <div class="value" id="memberSince">Mar 2026</div>
               </div>
               <div class="sub-meta-item">
                 <div class="label">Saved</div>
-                <div class="value">$1,240</div>
+                <div class="value" id="totalSaved">$1,240</div>
               </div>
             </div>
           </div>
 
           <div class="menu-section">
-            <div class="menu-item">
+            <button class="menu-item" data-modal="modal-edit-profile">
+              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+              <div class="menu-label">Edit Profile</div>
+              <svg class="menu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <button class="menu-item" data-modal="modal-properties">
               <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
               <div class="menu-label">My Properties</div>
+              <span class="menu-value" id="propertyCount">1 home</span>
               <svg class="menu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-            <div class="menu-item">
+            </button>
+            <button class="menu-item" data-modal="modal-payment">
               <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
               <div class="menu-label">Payment Methods</div>
+              <span class="menu-value">•••• 4242</span>
               <svg class="menu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-            <div class="menu-item" onclick="goTo('screen-plans')">
-              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3V4a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v3H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"/></svg></div>
+            </button>
+            <button class="menu-item" data-nav="screen-plans">
+              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5 12 2"/></svg></div>
               <div class="menu-label">Manage Subscription</div>
               <svg class="menu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+
+          <div class="menu-section">
+            <div class="menu-item" style="cursor:default;">
+              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6l-4 4V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg></div>
+              <div class="menu-label">Push Notifications</div>
+              <div class="toggle-switch on" data-toggle="push"></div>
             </div>
-            <div class="menu-item">
-              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-              <div class="menu-label">Service History</div>
-              <svg class="menu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <div class="menu-item" style="cursor:default;">
+              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></div>
+              <div class="menu-label">Email Updates</div>
+              <div class="toggle-switch on" data-toggle="email"></div>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" style="cursor:default;">
+              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+              <div class="menu-label">SMS Updates</div>
+              <div class="toggle-switch" data-toggle="sms"></div>
+            </div>
+          </div>
+
+          <div class="menu-section">
+            <button class="menu-item" id="helpBtn">
               <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
               <div class="menu-label">Help &amp; Support</div>
               <svg class="menu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
+            </button>
+            <button class="menu-item" id="signOutBtn">
+              <div class="menu-icon" style="color: var(--danger);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
+              <div class="menu-label" style="color: var(--danger);">Sign Out</div>
+            </button>
           </div>
 
           <div style="padding: 8px 24px 0; text-align: center; color: var(--muted); font-size: 12px;">
@@ -1715,92 +1955,1109 @@
 
     <!-- Bottom tab bar -->
     <div class="tab-bar" id="tabBar">
-      <button class="tab active" data-tab="screen-home" onclick="goTo('screen-home')">
+      <button class="tab active" data-tab="screen-home">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
         <span class="tab-label">Home</span>
       </button>
-      <button class="tab" onclick="goTo('screen-job')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <button class="tab" data-tab="screen-jobs">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         <span class="tab-label">Jobs</span>
       </button>
-      <button class="tab fab" onclick="goTo('screen-request')">
+      <button class="tab fab" data-new-request>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       </button>
-      <button class="tab" onclick="goTo('screen-plans')">
+      <button class="tab" data-tab="screen-plans">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5 12 2"/></svg>
         <span class="tab-label">Plans</span>
       </button>
-      <button class="tab" onclick="goTo('screen-profile')">
+      <button class="tab" data-tab="screen-profile">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <span class="tab-label">Account</span>
       </button>
+    </div>
+
+    <!-- ===== MODALS ===== -->
+
+    <!-- Photo source picker -->
+    <div class="modal-overlay" id="modal-photo-source">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="modal-title">Add a photo</div>
+        <div class="modal-sub">Choose how you'd like to add a photo of the issue.</div>
+        <div class="photo-options">
+          <button class="photo-option-btn" id="photoSourceCamera">
+            <div class="photo-option-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+            <div>
+              <div class="photo-option-name">Take a photo</div>
+              <div class="photo-option-desc">Open camera</div>
+            </div>
+          </button>
+          <button class="photo-option-btn" id="photoSourceGallery">
+            <div class="photo-option-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <div>
+              <div class="photo-option-name">Choose from library</div>
+              <div class="photo-option-desc">Pick existing photos</div>
+            </div>
+          </button>
+          <button class="btn btn-outline btn-block" data-modal-close style="margin-top:8px;">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm cancel job -->
+    <div class="modal-overlay" id="modal-confirm-cancel">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="modal-title">Cancel this job?</div>
+        <div class="modal-sub">Your assigned tech will be notified. You won't be charged for cancellations made before the tech arrives.</div>
+        <div class="confirm-actions">
+          <button class="btn btn-outline" data-modal-close>Keep Job</button>
+          <button class="btn" style="background:var(--danger);color:white;" id="confirmCancelBtn">Yes, Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm sign out -->
+    <div class="modal-overlay" id="modal-confirm-signout">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="modal-title">Sign out?</div>
+        <div class="modal-sub">You'll need to sign back in to use the app.</div>
+        <div class="confirm-actions">
+          <button class="btn btn-outline" data-modal-close>Cancel</button>
+          <button class="btn" style="background:var(--danger);color:white;" id="confirmSignOutBtn">Sign Out</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit profile -->
+    <div class="modal-overlay" id="modal-edit-profile">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="modal-title">Edit Profile</div>
+        <div class="modal-sub">Update your name and contact info.</div>
+        <label class="field-label" for="editName">Full name</label>
+        <input class="text-input" id="editName" type="text">
+        <label class="field-label" for="editEmail">Email</label>
+        <input class="text-input" id="editEmail" type="email">
+        <label class="field-label" for="editPhone">Phone</label>
+        <input class="text-input" id="editPhone" type="tel" placeholder="(214) 555-0123">
+        <div class="confirm-actions">
+          <button class="btn btn-outline" data-modal-close>Cancel</button>
+          <button class="btn btn-navy" id="saveProfileBtn">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Properties -->
+    <div class="modal-overlay" id="modal-properties">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="modal-title">My Properties</div>
+        <div class="modal-sub">Homes registered to your account.</div>
+        <div id="propertiesList"></div>
+        <button class="btn btn-outline btn-block" id="addPropertyBtn" style="margin-top:12px;">+ Add a Property</button>
+        <button class="btn btn-navy btn-block" data-modal-close style="margin-top:8px;">Done</button>
+      </div>
+    </div>
+
+    <!-- Payment methods -->
+    <div class="modal-overlay" id="modal-payment">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="modal-title">Payment Methods</div>
+        <div class="modal-sub">Cards on file for subscription and service charges.</div>
+        <div style="background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+          <div style="width:40px;height:28px;background:var(--navy);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:9px;font-weight:600;">VISA</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:600;color:var(--navy-deep);">•••• •••• •••• 4242</div>
+            <div style="font-size:12px;color:var(--muted);">Expires 08/28 · Default</div>
+          </div>
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--success);font-weight:600;">Active</span>
+        </div>
+        <button class="btn btn-outline btn-block" id="addCardBtn" style="margin-top:12px;">+ Add a Card</button>
+        <button class="btn btn-navy btn-block" data-modal-close style="margin-top:8px;">Done</button>
+      </div>
+    </div>
+
+    <!-- Help -->
+    <div class="modal-overlay" id="modal-help">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="modal-title">Help &amp; Support</div>
+        <div class="modal-sub">Get in touch with our team — we usually respond in under an hour during business hours.</div>
+        <div class="photo-options">
+          <button class="photo-option-btn" id="helpCallBtn">
+            <div class="photo-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div><div class="photo-option-name">Call us</div><div class="photo-option-desc">682-486-5915</div></div>
+          </button>
+          <button class="photo-option-btn" id="helpEmailBtn">
+            <div class="photo-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></div>
+            <div><div class="photo-option-name">Email us</div><div class="photo-option-desc">office@atlasgategroupllc.com</div></div>
+          </button>
+          <button class="btn btn-outline btn-block" data-modal-close style="margin-top:8px;">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add property -->
+    <div class="modal-overlay" id="modal-add-property">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="modal-title">Add a Property</div>
+        <div class="modal-sub">Add another home to your AtlasGate account.</div>
+        <label class="field-label" for="propAddress">Street address</label>
+        <input class="text-input" id="propAddress" type="text" placeholder="1234 Oak Lane">
+        <label class="field-label" for="propCity">City</label>
+        <select class="select-input" id="propCity">
+          <option>Carrollton</option>
+          <option>Dallas</option>
+          <option>Plano</option>
+          <option>Frisco</option>
+          <option>Addison</option>
+          <option>Coppell</option>
+          <option>Lewisville</option>
+          <option>The Colony</option>
+          <option>Richardson</option>
+        </select>
+        <label class="field-label" for="propLabel">Label (e.g., Home, Rental, Mom's place)</label>
+        <input class="text-input" id="propLabel" type="text" placeholder="Home">
+        <div class="confirm-actions">
+          <button class="btn btn-outline" data-modal-close>Cancel</button>
+          <button class="btn btn-navy" id="confirmAddPropBtn">Add Property</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add card -->
+    <div class="modal-overlay" id="modal-add-card">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="modal-title">Add a Card</div>
+        <div class="modal-sub">Demo only — no real card is charged. In production this connects to Stripe.</div>
+        <label class="field-label" for="cardNum">Card number</label>
+        <input class="text-input" id="cardNum" type="text" placeholder="•••• •••• •••• ••••" maxlength="19">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div>
+            <label class="field-label" for="cardExp">Expiry</label>
+            <input class="text-input" id="cardExp" type="text" placeholder="MM/YY" maxlength="5">
+          </div>
+          <div>
+            <label class="field-label" for="cardCvc">CVC</label>
+            <input class="text-input" id="cardCvc" type="text" placeholder="•••" maxlength="4">
+          </div>
+        </div>
+        <div class="confirm-actions">
+          <button class="btn btn-outline" data-modal-close>Cancel</button>
+          <button class="btn btn-navy" id="confirmAddCardBtn">Add Card</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan change confirm -->
+    <div class="modal-overlay" id="modal-plan-change">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="modal-title" id="planChangeTitle">Switch to Standard?</div>
+        <div class="modal-sub" id="planChangeSub">Your new plan starts immediately. You'll be charged the prorated amount on your next billing date.</div>
+        <div class="confirm-actions">
+          <button class="btn btn-outline" data-modal-close>Cancel</button>
+          <button class="btn btn-navy" id="confirmPlanChangeBtn">Confirm Switch</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message tech -->
+    <div class="modal-overlay" id="modal-message">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="modal-title" id="msgModalTitle">Message Miguel</div>
+        <div class="modal-sub">Send a quick note to your assigned tech.</div>
+        <textarea class="text-area" id="msgText" placeholder="Hi, the gate code is 1234..."></textarea>
+        <div class="confirm-actions">
+          <button class="btn btn-outline" data-modal-close>Cancel</button>
+          <button class="btn btn-navy" id="sendMsgBtn">Send</button>
+        </div>
+      </div>
     </div>
 
   </div>
 </div>
 
 <script>
-  // Screens that hide the tab bar
-  const hideTabOn = ['screen-onboard', 'screen-request', 'screen-job'];
-  // Screens with dark status bar
-  const darkStatusOn = ['screen-onboard', 'screen-job'];
+/* ============================================================
+   AtlasGate App — Fully Functional Demo
+   ============================================================ */
 
-  function goTo(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    const el = document.getElementById(id);
-    if (el) el.classList.add('active');
+// ----- STATE -----
+const state = {
+  user: {
+    name: 'Jordan Hayes',
+    firstName: 'Jordan',
+    email: 'jordan.hayes@email.com',
+    phone: '(214) 555-0123',
+    city: 'Carrollton, TX',
+    memberSince: 'Mar 2026',
+    totalSaved: 1240,
+  },
+  plan: 'standard', // basic, standard, premium
+  billing: 'monthly',
+  properties: [
+    { id: 1, address: '1234 Main St', city: 'Carrollton', label: 'Home' },
+  ],
+  toggles: { push: true, email: true, sms: false },
+  request: {
+    serviceType: '',
+    description: '',
+    photos: [],
+    urgency: 'standard',
+    date: null,
+    time: '12PM - 2PM',
+    address: '1234 Main St, Carrollton, TX',
+    notes: '',
+  },
+  jobs: [
+    {
+      id: 'AG-2841',
+      title: 'Kitchen sink leak repair',
+      service: 'Plumbing',
+      tech: { name: 'Miguel R.', initial: 'M', role: 'Master Plumber · 4.9 ★', phone: '+12145550181' },
+      status: 'live',
+      eta: '12 min',
+      address: '1234 Main St, Carrollton, TX',
+      timeline: [
+        { name: 'Request submitted', time: 'Today · 8:42 AM', state: 'done' },
+        { name: 'Tech assigned · Miguel R.', time: 'Today · 9:01 AM', state: 'done' },
+        { name: 'En route to your home', time: 'Arriving in 12 minutes', state: 'current' },
+        { name: 'Diagnosis & quote', time: 'Pending', state: 'pending' },
+        { name: 'Work completed', time: 'Pending', state: 'pending' },
+      ],
+    },
+    {
+      id: 'AG-2799',
+      title: 'AC tune-up & filter change',
+      service: 'HVAC',
+      tech: { name: 'Sarah K.', initial: 'S', role: 'HVAC Tech · 4.8 ★', phone: '+12145550172' },
+      status: 'scheduled',
+      eta: 'Mon 9 AM',
+      address: '1234 Main St, Carrollton, TX',
+      timeline: [
+        { name: 'Request submitted', time: 'May 25 · 3:21 PM', state: 'done' },
+        { name: 'Tech assigned · Sarah K.', time: 'May 25 · 4:15 PM', state: 'done' },
+        { name: 'Scheduled visit', time: 'Mon, Jun 2 · 9:00 AM', state: 'current' },
+        { name: 'Work completed', time: 'Pending', state: 'pending' },
+      ],
+    },
+    {
+      id: 'AG-2701',
+      title: 'Quarterly exterior walkaround',
+      service: 'Inspection',
+      tech: { name: 'David T.', initial: 'D', role: 'Home Inspector · 4.9 ★', phone: '+12145550193' },
+      status: 'done',
+      eta: 'Completed May 12',
+      address: '1234 Main St, Carrollton, TX',
+      timeline: [
+        { name: 'Request submitted', time: 'May 10 · 11:02 AM', state: 'done' },
+        { name: 'Tech assigned · David T.', time: 'May 10 · 11:45 AM', state: 'done' },
+        { name: 'Visit completed', time: 'May 12 · 2:30 PM', state: 'done' },
+      ],
+    },
+  ],
+  currentJobId: 'AG-2841',
+  history: [],
+  jobFilter: 'all',
+  jobSearch: '',
+};
 
-    // Tab bar visibility
-    const bar = document.getElementById('tabBar');
-    if (hideTabOn.includes(id)) bar.classList.add('hidden');
-    else bar.classList.remove('hidden');
+const PLANS = {
+  basic: { name: 'Basic', price: 29, yearly: 295, features: ['Exterior walkaround inspection (1x per year)', 'Interior walkaround inspection (1x per year)', '25% off all repairs & services', 'Priority service scheduling (48–72 hr)'], badge: '', stats: { free: 0, discount: 1, priority: '48h' } },
+  standard: { name: 'Standard', price: 79, yearly: 805, features: ['1 free service per month', 'Exterior walkarounds (4x per year)', 'Interior walkarounds (4x per year)', 'Priority service (24–48 hr)', '30% off repairs (2x per month)'], badge: 'Most Popular', stats: { free: 1, discount: 2, priority: '24h' } },
+  premium: { name: 'Premium', price: 149, yearly: 1520, features: ['2 free services per month', 'Exterior walkarounds (6x per year)', 'Interior walkarounds (6x per year)', 'Seasonal prep (winter & summer)', '40% off repairs (3x per month)', 'Emergency same / next-day response'], badge: 'White Glove', stats: { free: 2, discount: 3, priority: '4h' } },
+};
 
-    // Status bar styling
-    const sb = document.getElementById('statusBar');
-    if (darkStatusOn.includes(id)) sb.classList.add('dark');
-    else sb.classList.remove('dark');
+const SERVICES = [
+  { name: 'Home Cleaning', meta: 'Plan service · Free', featured: true, icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
+  { name: 'Plumbing', meta: '30% off with plan', icon: '<path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/><path d="M20 8v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8z"/>' },
+  { name: 'Electrical', meta: 'Licensed in TX', icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
+  { name: 'HVAC', meta: 'Texas heat? We got you', icon: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>' },
+  { name: 'Lawn Care', meta: 'Plan service · Free', icon: '<path d="M2 22V12a10 10 0 0 1 20 0v10"/><path d="M2 17h20"/>' },
+  { name: 'Handyman', meta: 'Small repairs', icon: '<rect x="2" y="2" width="20" height="20" rx="2"/><path d="M2 12h20M12 2v20"/>' },
+];
 
-    // Tab indicator
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    const activeTab = document.querySelector(`.tab[data-tab="${id}"]`);
-    if (activeTab) activeTab.classList.add('active');
+const hideTabOn = ['screen-onboard', 'screen-request', 'screen-request-schedule', 'screen-request-review', 'screen-job'];
+const darkStatusOn = ['screen-onboard', 'screen-job'];
 
-    // Reset scroll
-    document.getElementById('appBody').scrollTop = 0;
+// ----- HELPERS -----
+const $ = sel => document.querySelector(sel);
+const $$ = sel => document.querySelectorAll(sel);
+
+function showToast(text, type = '') {
+  const t = $('#toast');
+  $('#toastText').textContent = text;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+function vibrate() {
+  if (navigator.vibrate) navigator.vibrate(10);
+}
+
+// ----- NAVIGATION -----
+function goTo(id, pushHistory = true) {
+  if (pushHistory) state.history.push(getCurrentScreen());
+  $$('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.add('active');
+
+  // Tab bar
+  $('#tabBar').classList.toggle('hidden', hideTabOn.includes(id));
+  // Status bar
+  $('#statusBar').classList.toggle('dark', darkStatusOn.includes(id));
+  // Tab indicator
+  $$('.tab').forEach(t => t.classList.remove('active'));
+  const activeTab = document.querySelector(`.tab[data-tab="${id}"]`);
+  if (activeTab) activeTab.classList.add('active');
+
+  // Reset scroll
+  $('#appBody').scrollTop = 0;
+
+  // Per-screen render
+  if (id === 'screen-home') renderHome();
+  if (id === 'screen-jobs') renderJobsList();
+  if (id === 'screen-plans') renderPlans();
+  if (id === 'screen-profile') renderProfile();
+  if (id === 'screen-job') renderJobDetail();
+  if (id === 'screen-request-review') renderReview();
+  if (id === 'screen-request-schedule') renderDateRow();
+}
+
+function getCurrentScreen() {
+  const s = document.querySelector('.screen.active');
+  return s ? s.id : null;
+}
+
+function goBack() {
+  if (state.history.length > 0) {
+    const prev = state.history.pop();
+    goTo(prev, false);
+  } else {
+    goTo('screen-home', false);
   }
+}
 
-  function selectPlan(name) {
-    showToast(`${name} plan selected — continue to checkout`);
-    setTimeout(() => goTo('screen-home'), 800);
+// ----- MODALS -----
+function openModal(id) {
+  const m = document.getElementById(id);
+  if (m) m.classList.add('show');
+  vibrate();
+}
+function closeModal(id) {
+  if (id) {
+    const m = document.getElementById(id);
+    if (m) m.classList.remove('show');
+  } else {
+    $$('.modal-overlay').forEach(m => m.classList.remove('show'));
   }
+}
 
-  function submitRequest() {
-    showToast('Request submitted · Finding a pro...');
-    setTimeout(() => goTo('screen-job'), 900);
-  }
+// ----- RENDER: PLANS -----
+function renderPlans() {
+  const isYearly = state.billing === 'yearly';
+  $$('.toggle-opt').forEach(b => b.classList.toggle('active', b.dataset.billing === state.billing));
 
-  function showToast(text) {
-    const t = document.getElementById('toast');
-    document.getElementById('toastText').textContent = text;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2200);
-  }
+  const cards = $('#planCards');
+  cards.innerHTML = Object.entries(PLANS).map(([key, p]) => {
+    const price = isYearly ? Math.round(p.yearly / 12) : p.price;
+    const period = isYearly ? '/ mo, billed yearly' : '/ month';
+    const isCurrent = key === state.plan;
+    const cls = `plan-card plan-${key}${isCurrent ? ' current' : ''}`;
+    const badge = isCurrent ? '<div class="plan-badge">Current Plan</div>'
+                : p.badge ? `<div class="plan-badge">${p.badge}</div>` : '';
+    const features = p.features.map(f => `<li>${f}</li>`).join('');
+    const btnLabel = isCurrent ? 'Current Plan' : (state.plan === 'none' ? 'Get Started' : `Switch to ${p.name}`);
+    return `
+      <div class="${cls}">
+        ${badge}
+        <div class="plan-name"${key === 'standard' ? ' style="color:var(--gold)"' : ''}>${p.name}</div>
+        <div class="plan-price">
+          <span class="amount">$${price}</span>
+          <span class="period">${period}</span>
+        </div>
+        <ul class="plan-features">${features}</ul>
+        <button class="plan-select-btn" data-select-plan="${key}" ${isCurrent ? 'disabled' : ''}>${btnLabel}</button>
+      </div>`;
+  }).join('');
 
-  // Urgency selection
-  document.querySelectorAll('.urgency-opt').forEach(opt => {
-    opt.addEventListener('click', () => {
-      document.querySelectorAll('.urgency-opt').forEach(o => o.classList.remove('selected'));
-      opt.classList.add('selected');
+  // Wire up selection
+  $$('[data-select-plan]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const k = e.currentTarget.dataset.selectPlan;
+      if (k === state.plan) return;
+      $('#planChangeTitle').textContent = `Switch to ${PLANS[k].name}?`;
+      $('#planChangeSub').textContent = `Your new plan starts immediately at $${PLANS[k].price}/month. You'll be charged the prorated amount on your next billing date.`;
+      $('#confirmPlanChangeBtn').dataset.targetPlan = k;
+      openModal('modal-plan-change');
+    });
+  });
+}
+
+// ----- RENDER: HOME -----
+function renderHome() {
+  // greeting
+  const h = new Date().getHours();
+  $('#greetingText').textContent = h < 12 ? 'Good morning,' : h < 18 ? 'Good afternoon,' : 'Good evening,';
+  $('#userName').textContent = state.user.firstName;
+  $('#avatarInitial').textContent = state.user.firstName[0];
+
+  // plan tier
+  const p = PLANS[state.plan];
+  $('#homeMemberTier').textContent = `${p.name} Member`;
+  $('#statFree').textContent = p.stats.free;
+  $('#statDiscount').textContent = p.stats.discount;
+  $('#statPriority').textContent = p.stats.priority;
+
+  // services
+  $('#serviceGrid').innerHTML = SERVICES.map((s, i) => `
+    <button class="service-tile${s.featured ? ' featured' : ''}" data-service="${s.name}">
+      <div class="service-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg>
+      </div>
+      <div>
+        <div class="service-name">${s.name}</div>
+        <div class="service-meta">${s.meta}</div>
+      </div>
+    </button>`).join('');
+  $$('[data-service]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const svc = e.currentTarget.dataset.service;
+      startNewRequest(svc);
     });
   });
 
-  // Plan billing toggle
-  document.querySelectorAll('.toggle-opt').forEach(t => {
-    t.addEventListener('click', () => {
-      document.querySelectorAll('.toggle-opt').forEach(o => o.classList.remove('active'));
-      t.classList.add('active');
+  // home jobs (top 2 active/scheduled)
+  const activeJobs = state.jobs.filter(j => j.status === 'live' || j.status === 'scheduled').slice(0, 2);
+  if (activeJobs.length === 0) {
+    $('#homeJobsList').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon-lg">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="empty-title-text">No active jobs</div>
+        <div class="empty-sub-text">Tap the + button to request your first service.</div>
+      </div>`;
+  } else {
+    $('#homeJobsList').innerHTML = activeJobs.map(j => jobCardHTML(j)).join('');
+    $$('#homeJobsList [data-open-job]').forEach(b => {
+      b.addEventListener('click', e => openJob(e.currentTarget.dataset.openJob));
+    });
+  }
+}
+
+function jobCardHTML(j) {
+  const iconCls = j.status === 'live' ? 'live' : j.status === 'done' ? 'done' : '';
+  const pillCls = j.status === 'live' ? 'live' : j.status === 'done' ? 'done' : 'scheduled';
+  const pillText = j.status === 'live' ? `Tech En Route · ${j.eta}`
+                : j.status === 'done' ? j.eta
+                : `Scheduled · ${j.eta}`;
+  const iconSvg = j.status === 'done'
+    ? '<polyline points="20 6 9 17 4 12"/>'
+    : j.status === 'live'
+    ? '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>'
+    : '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>';
+  return `
+    <button class="job-card" data-open-job="${j.id}">
+      <div class="job-status-icon ${iconCls}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${iconSvg}</svg>
+      </div>
+      <div class="job-info">
+        <div class="job-title">${escapeHtml(j.title)}</div>
+        <div class="job-meta"><span class="job-pill ${pillCls}">${escapeHtml(pillText)}</span></div>
+      </div>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted);"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>`;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+// ----- RENDER: JOBS LIST -----
+function renderJobsList() {
+  const all = state.jobs;
+  const active = all.filter(j => j.status === 'live' || j.status === 'scheduled');
+  const done = all.filter(j => j.status === 'done');
+  $('#countAll').textContent = all.length;
+  $('#countActive').textContent = active.length;
+  $('#countDone').textContent = done.length;
+
+  $$('[data-job-filter]').forEach(b => {
+    b.classList.toggle('active', b.dataset.jobFilter === state.jobFilter);
+  });
+
+  let list = all;
+  if (state.jobFilter === 'active') list = active;
+  if (state.jobFilter === 'completed') list = done;
+  if (state.jobSearch) {
+    const q = state.jobSearch.toLowerCase();
+    list = list.filter(j => j.title.toLowerCase().includes(q) || j.service.toLowerCase().includes(q));
+  }
+
+  if (list.length === 0) {
+    $('#allJobsList').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon-lg">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="empty-title-text">No matching jobs</div>
+        <div class="empty-sub-text">Try a different filter or search term.</div>
+      </div>`;
+    return;
+  }
+  $('#allJobsList').innerHTML = list.map(j => jobCardHTML(j)).join('');
+  $$('#allJobsList [data-open-job]').forEach(b => {
+    b.addEventListener('click', e => openJob(e.currentTarget.dataset.openJob));
+  });
+}
+
+// ----- RENDER: JOB DETAIL -----
+function openJob(id) {
+  state.currentJobId = id;
+  goTo('screen-job');
+}
+
+function renderJobDetail() {
+  const j = state.jobs.find(x => x.id === state.currentJobId);
+  if (!j) return;
+  $('#jobIdTag').textContent = `Service Request · #${j.id}`;
+  $('#jobHeroTitle').textContent = j.title;
+  $('#techInitial').textContent = j.tech.initial;
+  $('#techName').textContent = j.tech.name;
+  $('#techRole').textContent = j.tech.role;
+  $('#techEta').textContent = j.eta;
+  $('#msgModalTitle').textContent = `Message ${j.tech.name.split(' ')[0]}`;
+
+  $('#jobTimeline').innerHTML = j.timeline.map(t => `
+    <div class="timeline-item ${t.state}">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-name">${escapeHtml(t.name)}</div>
+        <div class="timeline-time">${escapeHtml(t.time)}</div>
+      </div>
+    </div>`).join('');
+
+  // Cancel button visibility
+  $('#cancelJobBtn').style.display = j.status === 'done' ? 'none' : '';
+}
+
+// ----- RENDER: PROFILE -----
+function renderProfile() {
+  $('#profileInitial').textContent = state.user.firstName[0];
+  $('#profileName').textContent = state.user.name;
+  $('#profileEmail').textContent = `${state.user.email} · ${state.user.city}`;
+  const p = PLANS[state.plan];
+  $('#subPlanDisplay').textContent = `${p.name} · $${p.price}/mo`;
+  $('#memberSince').textContent = state.user.memberSince;
+  $('#totalSaved').textContent = '$' + state.user.totalSaved.toLocaleString();
+  $('#propertyCount').textContent = `${state.properties.length} home${state.properties.length === 1 ? '' : 's'}`;
+
+  // Toggle states
+  $$('[data-toggle]').forEach(t => {
+    t.classList.toggle('on', !!state.toggles[t.dataset.toggle]);
+  });
+
+  // Pre-fill edit modal
+  $('#editName').value = state.user.name;
+  $('#editEmail').value = state.user.email;
+  $('#editPhone').value = state.user.phone;
+
+  // Properties modal list
+  $('#propertiesList').innerHTML = state.properties.map(p => `
+    <div style="background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+      <div style="width:40px;height:40px;background:var(--paper);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--navy);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:600;color:var(--navy-deep);">${escapeHtml(p.label)}</div>
+        <div style="font-size:12px;color:var(--muted);">${escapeHtml(p.address)}, ${escapeHtml(p.city)}</div>
+      </div>
+      ${state.properties.length > 1 ? `<button class="btn-sm" style="background:none;border:none;color:var(--danger);font-size:12px;" data-remove-prop="${p.id}">Remove</button>` : ''}
+    </div>`).join('');
+  $$('[data-remove-prop]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const id = parseInt(e.currentTarget.dataset.removeProp);
+      state.properties = state.properties.filter(p => p.id !== id);
+      renderProfile();
+      showToast('Property removed', 'success');
     });
   });
+}
+
+// ----- REQUEST FLOW -----
+function startNewRequest(presetService = '') {
+  state.request = {
+    serviceType: presetService,
+    description: '',
+    photos: [],
+    urgency: 'standard',
+    date: null,
+    time: '12PM - 2PM',
+    address: state.properties[0] ? `${state.properties[0].address}, ${state.properties[0].city}, TX` : '',
+    notes: '',
+  };
+  $('#serviceType').value = presetService;
+  $('#issueDesc').value = '';
+  $('#photoPreviews').innerHTML = '';
+  $$('.urgency-opt').forEach(o => o.classList.toggle('selected', o.dataset.urgency === 'standard'));
+  $('#addressInput').value = state.request.address;
+  $('#accessNotes').value = '';
+  goTo('screen-request');
+}
+
+function renderDateRow() {
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const today = new Date();
+  const row = $('#dateRow');
+  row.innerHTML = '';
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    const dayLabel = i === 0 ? 'Today' : i === 1 ? 'Tmrw' : days[d.getDay()];
+    const dateStr = d.toISOString().split('T')[0];
+    if (!state.request.date) state.request.date = dateStr; // default to today
+    const chip = document.createElement('button');
+    chip.className = 'date-chip' + (state.request.date === dateStr ? ' selected' : '');
+    chip.dataset.date = dateStr;
+    chip.innerHTML = `<div class="date-day">${dayLabel}</div><div class="date-num">${d.getDate()}</div>`;
+    chip.addEventListener('click', () => {
+      state.request.date = dateStr;
+      $$('.date-chip').forEach(c => c.classList.toggle('selected', c.dataset.date === dateStr));
+    });
+    row.appendChild(chip);
+  }
+}
+
+function renderReview() {
+  $('#reviewService').textContent = state.request.serviceType || '—';
+  $('#reviewUrgency').textContent = state.request.urgency === 'emergency' ? 'Emergency (+$75)' : 'Standard';
+  if (state.request.date) {
+    const d = new Date(state.request.date + 'T00:00:00');
+    $('#reviewDate').textContent = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  } else {
+    $('#reviewDate').textContent = 'Today';
+  }
+  $('#reviewTime').textContent = state.request.time;
+  $('#reviewAddress').textContent = state.request.address || '—';
+  $('#reviewPlan').textContent = PLANS[state.plan].name;
+}
+
+// ----- PHOTO HANDLING -----
+function handlePhotoFiles(files) {
+  Array.from(files).forEach(file => {
+    if (!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      state.request.photos.push(e.target.result);
+      renderPhotoPreviews();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderPhotoPreviews() {
+  const grid = $('#photoPreviews');
+  grid.innerHTML = state.request.photos.map((src, i) => `
+    <div class="photo-preview">
+      <img src="${src}" alt="Photo ${i+1}">
+      <button class="photo-remove" data-remove-photo="${i}" aria-label="Remove">×</button>
+    </div>`).join('');
+  $$('[data-remove-photo]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const idx = parseInt(e.currentTarget.dataset.removePhoto);
+      state.request.photos.splice(idx, 1);
+      renderPhotoPreviews();
+    });
+  });
+}
+
+// ============================================================
+// EVENT WIRING — everything below makes buttons actually work
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Status bar clock
+  function updateClock() {
+    const now = new Date();
+    const h = now.getHours();
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const display = `${((h + 11) % 12 + 1)}:${m}`;
+    $('#statusTime').textContent = display;
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  // ----- Generic navigation [data-nav] -----
+  document.body.addEventListener('click', e => {
+    const navBtn = e.target.closest('[data-nav]');
+    if (navBtn) { goTo(navBtn.dataset.nav); return; }
+
+    const backBtn = e.target.closest('[data-back]');
+    if (backBtn) { goBack(); return; }
+
+    const tabBtn = e.target.closest('[data-tab]');
+    if (tabBtn) { state.history = []; goTo(tabBtn.dataset.tab, false); return; }
+
+    const newReqBtn = e.target.closest('[data-new-request]');
+    if (newReqBtn) { startNewRequest(); return; }
+
+    const modalBtn = e.target.closest('[data-modal]');
+    if (modalBtn) { openModal(modalBtn.dataset.modal); return; }
+
+    const modalCloseBtn = e.target.closest('[data-modal-close]');
+    if (modalCloseBtn) { closeModal(modalCloseBtn.closest('.modal-overlay').id); return; }
+
+    // Click outside modal to close
+    if (e.target.classList.contains('modal-overlay')) {
+      closeModal(e.target.id);
+      return;
+    }
+  });
+
+  // ----- Onboarding -----
+  $('#ctaPlans').addEventListener('click', () => goTo('screen-plans'));
+  $('#ctaSignIn').addEventListener('click', () => {
+    showToast('Welcome back!', 'success');
+    setTimeout(() => goTo('screen-home'), 600);
+  });
+
+  // ----- Plan billing toggle -----
+  $$('[data-billing]').forEach(b => {
+    b.addEventListener('click', () => {
+      state.billing = b.dataset.billing;
+      renderPlans();
+    });
+  });
+
+  // ----- Plan change confirm -----
+  $('#confirmPlanChangeBtn').addEventListener('click', e => {
+    const target = e.currentTarget.dataset.targetPlan;
+    state.plan = target;
+    closeModal('modal-plan-change');
+    showToast(`Switched to ${PLANS[target].name}`, 'success');
+    setTimeout(() => goTo('screen-home', false), 500);
+  });
+
+  // ----- Request flow -----
+  $('#serviceType').addEventListener('change', e => { state.request.serviceType = e.target.value; });
+  $('#issueDesc').addEventListener('input', e => { state.request.description = e.target.value; });
+
+  // Urgency
+  $$('.urgency-opt').forEach(o => {
+    o.addEventListener('click', () => {
+      $$('.urgency-opt').forEach(x => x.classList.remove('selected'));
+      o.classList.add('selected');
+      state.request.urgency = o.dataset.urgency;
+    });
+  });
+
+  // Photo upload — opens picker modal
+  $('#addPhotoBtn').addEventListener('click', () => {
+    if (state.request.photos.length >= 6) {
+      showToast('Maximum 6 photos', 'error');
+      return;
+    }
+    openModal('modal-photo-source');
+  });
+
+  // Photo: take with camera
+  $('#photoSourceCamera').addEventListener('click', () => {
+    closeModal('modal-photo-source');
+    setTimeout(() => $('#photoCamera').click(), 200);
+  });
+
+  // Photo: choose from gallery
+  $('#photoSourceGallery').addEventListener('click', () => {
+    closeModal('modal-photo-source');
+    setTimeout(() => $('#photoGallery').click(), 200);
+  });
+
+  // Photo file inputs
+  $('#photoCamera').addEventListener('change', e => {
+    handlePhotoFiles(e.target.files);
+    e.target.value = ''; // reset so same file can be picked again
+  });
+  $('#photoGallery').addEventListener('change', e => {
+    handlePhotoFiles(e.target.files);
+    e.target.value = '';
+  });
+
+  // Step 1 next
+  $('#requestStep1Next').addEventListener('click', () => {
+    if (!state.request.serviceType) {
+      showToast('Please pick a service type', 'error');
+      return;
+    }
+    if (!state.request.description.trim()) {
+      showToast('Please describe the issue', 'error');
+      return;
+    }
+    goTo('screen-request-schedule');
+  });
+
+  // Schedule time chips
+  $('#timeGrid').addEventListener('click', e => {
+    const chip = e.target.closest('.time-chip');
+    if (!chip) return;
+    $$('#timeGrid .time-chip').forEach(c => c.classList.remove('selected'));
+    chip.classList.add('selected');
+    state.request.time = chip.dataset.time;
+  });
+
+  // Address + notes
+  $('#addressInput').addEventListener('input', e => { state.request.address = e.target.value; });
+  $('#accessNotes').addEventListener('input', e => { state.request.notes = e.target.value; });
+
+  // Step 2 next
+  $('#requestStep2Next').addEventListener('click', () => {
+    if (!state.request.address.trim()) {
+      showToast('Please enter an address', 'error');
+      return;
+    }
+    goTo('screen-request-review');
+  });
+
+  // Final submit
+  $('#requestSubmit').addEventListener('click', () => {
+    const btn = $('#requestSubmit');
+    btn.disabled = true;
+    $('#submitBtnText').textContent = 'Submitting...';
+    $('#submitBtnIcon').outerHTML = '<div class="spinner" id="submitBtnIcon"></div>';
+
+    setTimeout(() => {
+      // Create new job
+      const newJob = {
+        id: 'AG-' + Math.floor(Math.random() * 9000 + 1000),
+        title: state.request.serviceType + (state.request.description ? ' — ' + state.request.description.substring(0, 40) + (state.request.description.length > 40 ? '...' : '') : ''),
+        service: state.request.serviceType,
+        tech: { name: 'Finding your pro...', initial: '?', role: 'Pro being assigned', phone: '+12145559000' },
+        status: 'live',
+        eta: '~30 min',
+        address: state.request.address,
+        timeline: [
+          { name: 'Request submitted', time: 'Just now', state: 'done' },
+          { name: 'Finding a pro', time: 'In progress', state: 'current' },
+          { name: 'Tech assigned', time: 'Pending', state: 'pending' },
+          { name: 'En route', time: 'Pending', state: 'pending' },
+          { name: 'Work completed', time: 'Pending', state: 'pending' },
+        ],
+      };
+      state.jobs.unshift(newJob);
+      state.currentJobId = newJob.id;
+
+      // Reset button
+      btn.disabled = false;
+      $('#submitBtnText').textContent = 'Submit Request';
+      const oldIcon = $('#submitBtnIcon');
+      if (oldIcon) {
+        oldIcon.outerHTML = '<svg id="submitBtnIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      }
+
+      showToast('Request submitted · Finding a pro', 'success');
+      state.history = [];
+      setTimeout(() => goTo('screen-job', false), 600);
+    }, 1200);
+  });
+
+  // ----- Job detail actions -----
+  $('#jobMessageBtn').addEventListener('click', () => {
+    $('#msgText').value = '';
+    openModal('modal-message');
+  });
+
+  $('#sendMsgBtn').addEventListener('click', () => {
+    const text = $('#msgText').value.trim();
+    if (!text) {
+      showToast('Please type a message', 'error');
+      return;
+    }
+    closeModal('modal-message');
+    showToast('Message sent to tech', 'success');
+  });
+
+  $('#jobCallBtn').addEventListener('click', () => {
+    const j = state.jobs.find(x => x.id === state.currentJobId);
+    if (!j) return;
+    // Try to actually call on mobile, otherwise show toast
+    const phone = j.tech.phone || '+12145559000';
+    if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+      window.location.href = `tel:${phone}`;
+    } else {
+      showToast(`Calling ${j.tech.name}...`, 'success');
+    }
+  });
+
+  $('#cancelJobBtn').addEventListener('click', () => {
+    openModal('modal-confirm-cancel');
+  });
+  $('#confirmCancelBtn').addEventListener('click', () => {
+    const j = state.jobs.find(x => x.id === state.currentJobId);
+    if (j) {
+      state.jobs = state.jobs.filter(x => x.id !== state.currentJobId);
+    }
+    closeModal('modal-confirm-cancel');
+    showToast('Job cancelled', 'success');
+    goBack();
+  });
+
+  // ----- Jobs list filters -----
+  $$('[data-job-filter]').forEach(b => {
+    b.addEventListener('click', () => {
+      state.jobFilter = b.dataset.jobFilter;
+      renderJobsList();
+    });
+  });
+
+  // Job search
+  $('#jobSearch').addEventListener('input', e => {
+    state.jobSearch = e.target.value;
+    renderJobsList();
+  });
+
+  // ----- Toggles -----
+  document.body.addEventListener('click', e => {
+    const t = e.target.closest('[data-toggle]');
+    if (!t) return;
+    const key = t.dataset.toggle;
+    state.toggles[key] = !state.toggles[key];
+    t.classList.toggle('on', state.toggles[key]);
+    showToast(`${key.toUpperCase()} ${state.toggles[key] ? 'enabled' : 'disabled'}`, '');
+  });
+
+  // ----- Profile actions -----
+  $('#saveProfileBtn').addEventListener('click', () => {
+    const newName = $('#editName').value.trim();
+    const newEmail = $('#editEmail').value.trim();
+    const newPhone = $('#editPhone').value.trim();
+    if (!newName || !newEmail) {
+      showToast('Name and email are required', 'error');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) {
+      showToast('Please enter a valid email', 'error');
+      return;
+    }
+    state.user.name = newName;
+    state.user.firstName = newName.split(' ')[0];
+    state.user.email = newEmail;
+    state.user.phone = newPhone;
+    closeModal('modal-edit-profile');
+    renderProfile();
+    showToast('Profile updated', 'success');
+  });
+
+  $('#addPropertyBtn').addEventListener('click', () => {
+    closeModal('modal-properties');
+    setTimeout(() => {
+      $('#propAddress').value = '';
+      $('#propLabel').value = '';
+      openModal('modal-add-property');
+    }, 200);
+  });
+
+  $('#confirmAddPropBtn').addEventListener('click', () => {
+    const addr = $('#propAddress').value.trim();
+    const city = $('#propCity').value;
+    const label = $('#propLabel').value.trim() || 'Home';
+    if (!addr) {
+      showToast('Please enter an address', 'error');
+      return;
+    }
+    state.properties.push({ id: Date.now(), address: addr, city, label });
+    closeModal('modal-add-property');
+    showToast('Property added', 'success');
+    setTimeout(() => { renderProfile(); openModal('modal-properties'); }, 300);
+  });
+
+  $('#addCardBtn').addEventListener('click', () => {
+    closeModal('modal-payment');
+    setTimeout(() => {
+      $('#cardNum').value = '';
+      $('#cardExp').value = '';
+      $('#cardCvc').value = '';
+      openModal('modal-add-card');
+    }, 200);
+  });
+
+  // Format card number
+  $('#cardNum').addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g, '').substring(0, 16);
+    v = v.match(/.{1,4}/g)?.join(' ') || '';
+    e.target.value = v;
+  });
+  $('#cardExp').addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length > 2) v = v.substring(0, 2) + '/' + v.substring(2);
+    e.target.value = v;
+  });
+  $('#cardCvc').addEventListener('input', e => {
+    e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
+  });
+
+  $('#confirmAddCardBtn').addEventListener('click', () => {
+    const num = $('#cardNum').value.replace(/\s/g, '');
+    const exp = $('#cardExp').value;
+    const cvc = $('#cardCvc').value;
+    if (num.length < 13) {
+      showToast('Please enter a valid card number', 'error');
+      return;
+    }
+    if (!/^\d{2}\/\d{2}$/.test(exp)) {
+      showToast('Please enter expiry as MM/YY', 'error');
+      return;
+    }
+    if (cvc.length < 3) {
+      showToast('Please enter a valid CVC', 'error');
+      return;
+    }
+    closeModal('modal-add-card');
+    showToast('Card added (demo only)', 'success');
+    setTimeout(() => openModal('modal-payment'), 300);
+  });
+
+  $('#helpBtn').addEventListener('click', () => openModal('modal-help'));
+
+  $('#helpCallBtn').addEventListener('click', () => {
+    if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+      window.location.href = 'tel:+16824865915';
+    } else {
+      showToast('Call 682-486-5915', '');
+    }
+  });
+  $('#helpEmailBtn').addEventListener('click', () => {
+    window.location.href = 'mailto:office@atlasgategroupllc.com?subject=AtlasGate Support';
+  });
+
+  // Sign out
+  $('#signOutBtn').addEventListener('click', () => openModal('modal-confirm-signout'));
+  $('#confirmSignOutBtn').addEventListener('click', () => {
+    closeModal('modal-confirm-signout');
+    state.history = [];
+    showToast('Signed out', '');
+    setTimeout(() => goTo('screen-onboard', false), 400);
+  });
+
+  // ----- Section links / browse -----
+  // (Wired via data-nav / data-new-request above)
+
+  // Init: render home for first visit
+  renderHome();
+});
 </script>
 
 </body>
