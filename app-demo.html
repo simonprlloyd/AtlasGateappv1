@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Atlas Gate — Dallas Home Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1F3A;
+    --navy-deep: #061229;
+    --navy-light: #1B3658;
+    --gold: #D4A445;
+    --gold-bright: #E8BC5C;
+    --gold-soft: #F4E4BC;
+    --cream: #FAF6EE;
+    --paper: #F5EFE2;
+    --ink: #0A0E1A;
+    --muted: #6B7280;
+    --line: rgba(11, 31, 58, 0.08);
+    --shadow-sm: 0 1px 2px rgba(11, 31, 58, 0.06), 0 1px 3px rgba(11, 31, 58, 0.04);
+    --shadow-md: 0 4px 12px rgba(11, 31, 58, 0.08), 0 2px 4px rgba(11, 31, 58, 0.04);
+    --shadow-lg: 0 12px 32px rgba(11, 31, 58, 0.12), 0 4px 8px rgba(11, 31, 58, 0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: #2a2a2a;
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Phone frame for desktop preview */
+  .device-wrap {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at top, #3a3a3a 0%, #1a1a1a 100%);
+    padding: 20px;
+  }
+
+  .device {
+    width: 100%;
+    max-width: 420px;
+    height: 100%;
+    max-height: 900px;
+    background: var(--cream);
+    border-radius: 44px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 0 12px #0a0a0a, 0 0 0 14px #2a2a2a;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 500px) {
+    .device-wrap { padding: 0; }
+    .device { max-width: none; max-height: none; border-radius: 0; box-shadow: none; height: 100vh; }
+  }
+
+  /* Status bar */
+  .status-bar {
+    height: 44px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 28px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    position: relative;
+    z-index: 10;
+  }
+  .status-bar.dark { color: var(--cream); }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+
+  /* App body */
+  .app-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+  .app-body::-webkit-scrollbar { display: none; }
+
+  .screen {
+    display: none;
+    min-height: 100%;
+    animation: fadeIn 0.3s ease;
+  }
+  .screen.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ ONBOARDING ============ */
+  .onboard {
+    height: 100%;
+    background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 100%);
+    color: var(--cream);
+    padding: 24px 28px 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .onboard::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+    opacity: 0.15;
+    border-radius: 50%;
+  }
+  .onboard::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+    opacity: 0.08;
+    border-radius: 50%;
+  }
+
+  .logo-mark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+  }
+  .logo-star {
+    width: 32px;
+    height: 32px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+  .logo-text {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-tag {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    line-height: 1.0;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 300;
+  }
+  .hero-sub {
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(250, 246, 238, 0.7);
+    max-width: 320px;
+  }
+
+  .onboard-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Buttons */
+  .btn {
+    border: none;
+    border-radius: 14px;
+    padding: 18px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-gold {
+    background: var(--gold);
+    color: var(--navy-deep);
+  }
+  .btn-gold:hover { background: var(--gold-bright); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(250, 246, 238, 0.2);
+  }
+  .btn-navy {
+    background: var(--navy);
+    color: var(--cream);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--navy);
+    border: 1.5px solid var(--navy);
+  }
+  .btn-block { width: 100%; }
+  .btn-sm { padding: 10px 16px; font-size: 14px; border-radius: 10px; }
+
+  /* ============ PLANS SCREEN ============ */
+  .plans-screen {
+    background: var(--cream);
+    min-height: 100%;
+    padding-bottom: 100px;
+  }
+  .plans-header {
+    padding: 16px 24px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(11, 31, 58, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    color: var(--navy);
+  }
+  .plans-intro {
+    padding: 24px 28px 8px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .plans-title {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    color: var(--navy-deep);
+    margin-bottom: 12px;
+  }
+  .plans-title em { font-style: italic; color: var(--gold); }
+  .plans-sub {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .plan-cards {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .plan-card {
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+  }
+  .plan-card:active { transform: scale(0.98); }
+  .plan-basic {
+    background: white;
+    border: 1px solid var(--line);
+  }
+  .plan-standard {
+    background: var(--navy);
+    color: var(--cream);
+    box-shadow: 0 8px 24px rgba(11, 31, 58, 0.2);
+  }
+  .plan-premium {
+    background: linear-gradient(135deg, var(--gold) 0%, #C99935 100%);
+    color: var(--navy-deep);
+    box-shadow: 0 8px 24px rgba(212, 164, 69, 0.3);
+  }
+
+  .plan-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+  }
+  .plan-standard .plan-badge {
+    background: var(--gold);
+    color: var(--navy-deep);
+  }
+  .plan-premium .plan-badge {
+    background: rgba(11, 31, 58, 0.15);
+    color: var(--navy-deep);
+  }
+
+  .plan-name {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+  .plan-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+  .plan-price .amount {
+    font-family: 'Fraunces', serif;
+    font-size: 56px;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+  }
+  .plan-price .period {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+
+  .plan-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .plan-features li {
+    font-size: 14px;
+    line-height: 1.4;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .plan-features li::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    border-radius: 50%;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B1F3A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+    background-size: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: var(--gold);
+  }
+  .plan-standard .plan-features li::before,
+  .plan-premium .plan-features li::before {
+    background-color: rgba(255,255,255,0.95);
+  }
+
+  /* ============ MAIN APP ============ */
+  .app-screen { background: var(--cream); min-height: 100%; padding-bottom: 100px; }
+
+  .top-bar {
+    padding: 16px 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .greeting-block .hello {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+  .greeting-block .name {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--navy-deep);
+    letter-spacing: -0.02em;
+  }
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--navy-deep);
+    font-size: 16px;
+  }
+
+  /* Plan card on home */
+  .home-plan-card {
+    margin: 20px 20px 0;
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: 24px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .home-plan-card::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+    opacity: 0.2;
+  }
+  .home-plan-card::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 120px;
+    height: 120px;
+    border: 1px solid rgba(212, 164, 69, 0.15);
+    border-radius: 50%;
+  }
+  .plan-status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 2;
+  }
+  .plan-tier {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .plan-tier .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--gold);
+  }
+  .plan-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .plan-action-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--cream);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .plan-next-service {
+    font-size: 13px;
+    color: rgba(250, 246, 238, 0.6);
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 2;
+  }
+  .plan-headline {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    line-height: 1.15;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 2;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .plan-stats {
+    display: flex;
+    gap: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    z-index: 2;
+  }
+  .stat-item .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .stat-item .stat-label {
+    font-size: 11px;
+    color: rgba(250, 246, 238, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+
+  /* Section heading */
+  .section-head {
+    padding: 28px 24px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--navy-deep);
+    letter-spacing: -0.01em;
+  }
+  .section-link {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+  }
+
+  /* Service grid */
+  .service-grid {
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .service-tile {
+    background: white;
+    border-radius: 18px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 110px;
+  }
+  .service-tile:active { transform: scale(0.97); background: var(--paper); }
+  .service-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--navy);
+  }
+  .service-tile.featured .service-icon {
+    background: var(--gold);
+    color: var(--navy-deep);
+  }
+  .service-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy-deep);
+    line-height: 1.2;
+  }
+  .service-meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* Active jobs */
+  .job-list { padding: 0 20px; display: flex; flex-direction: column; gap: 10px; }
+  .job-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+  }
+  .job-status-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--paper);
+    color: var(--navy);
+  }
+  .job-status-icon.live { background: rgba(212, 164, 69, 0.15); color: var(--gold); }
+  .job-info { flex: 1; min-width: 0; }
+  .job-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy-deep);
+    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .job-meta {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .job-pill {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: var(--paper);
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .job-pill.live {
+    background: var(--gold);
+    color: var(--navy-deep);
+  }
+  .job-pill.scheduled {
+    background: rgba(11, 31, 58, 0.08);
+    color: var(--navy);
+  }
+
+  /* CTA banner */
+  .cta-banner {
+    margin: 20px;
+    padding: 24px;
+    background: linear-gradient(135deg, var(--gold-soft) 0%, var(--gold) 100%);
+    border-radius: 20px;
+    color: var(--navy-deep);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-banner::after {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    border: 1px solid rgba(11, 31, 58, 0.15);
+    border-radius: 50%;
+  }
+  .cta-eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+  .cta-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    letter-spacing: -0.015em;
+    font-weight: 500;
+  }
+  .cta-btn {
+    background: var(--navy-deep);
+    color: var(--cream);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  /* ============ REQUEST FLOW ============ */
+  .request-screen { background: var(--cream); min-height: 100%; padding-bottom: 120px; }
+  .request-header {
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .request-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--navy-deep);
+    letter-spacing: -0.01em;
+  }
+  .step-progress {
+    padding: 0 24px 16px;
+    display: flex;
+    gap: 6px;
+  }
+  .step-dot {
+    flex: 1;
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(11, 31, 58, 0.1);
+  }
+  .step-dot.active { background: var(--gold); }
+  .step-dot.done { background: var(--navy); }
+
+  .request-body { padding: 16px 24px; }
+  .request-eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .request-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    line-height: 1.1;
+    color: var(--navy-deep);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+  }
+  .request-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy-deep);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .text-input, .text-area {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--ink);
+    margin-bottom: 16px;
+    resize: none;
+  }
+  .text-input:focus, .text-area:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .text-area { min-height: 120px; }
+
+  .photo-upload {
+    background: white;
+    border: 1.5px dashed rgba(11, 31, 58, 0.15);
+    border-radius: 16px;
+    padding: 32px 16px;
+    text-align: center;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .photo-upload:hover { border-color: var(--gold); background: rgba(212, 164, 69, 0.04); }
+  .photo-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    color: var(--navy);
+  }
+  .photo-text {
+    font-size: 14px;
+    color: var(--navy-deep);
+    font-weight: 500;
+  }
+  .photo-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .urgency-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .urgency-opt {
+    background: white;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+  }
+  .urgency-opt.selected {
+    border-color: var(--gold);
+    background: rgba(212, 164, 69, 0.05);
+  }
+  .urgency-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy-deep);
+    margin-bottom: 2px;
+  }
+  .urgency-time {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ============ JOB DETAIL ============ */
+  .job-detail-screen { background: var(--cream); min-height: 100%; padding-bottom: 100px; }
+  .job-hero {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 16px 24px 32px;
+    border-radius: 0 0 32px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .job-hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+    opacity: 0.1;
+  }
+  .job-hero-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 2;
+  }
+  .back-btn-light {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    color: var(--cream);
+  }
+  .job-hero-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 2;
+  }
+  .job-hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    line-height: 1.1;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+  }
+  .tech-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 16px;
+    position: relative;
+    z-index: 2;
+  }
+  .tech-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--navy-deep);
+  }
+  .tech-name { font-size: 15px; font-weight: 600; }
+  .tech-role { font-size: 12px; color: rgba(250,246,238,0.6); margin-top: 2px; }
+  .tech-eta {
+    margin-left: auto;
+    text-align: right;
+  }
+  .eta-time {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .eta-label { font-size: 10px; color: rgba(250,246,238,0.6); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .timeline {
+    padding: 28px 24px 0;
+  }
+  .timeline-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--navy-deep);
+    margin-bottom: 20px;
+  }
+  .timeline-item {
+    display: flex;
+    gap: 14px;
+    padding-bottom: 20px;
+    position: relative;
+  }
+  .timeline-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 28px;
+    bottom: 0;
+    width: 2px;
+    background: var(--line);
+  }
+  .timeline-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--line);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .timeline-item.done .timeline-dot {
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+  .timeline-item.current .timeline-dot {
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 0 0 4px rgba(212, 164, 69, 0.2);
+  }
+  .timeline-item.current::before { background: var(--line); }
+  .timeline-content { flex: 1; padding-top: 2px; }
+  .timeline-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy-deep);
+  }
+  .timeline-time {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .job-actions {
+    padding: 24px;
+    display: flex;
+    gap: 10px;
+  }
+
+  /* ============ PROFILE/SUBSCRIPTION ============ */
+  .profile-screen { background: var(--cream); min-height: 100%; padding-bottom: 100px; }
+  .profile-header {
+    padding: 24px 24px 0;
+    text-align: center;
+  }
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--navy-deep);
+  }
+  .profile-name {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--navy-deep);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .profile-email { font-size: 13px; color: var(--muted); }
+
+  .subscription-card {
+    margin: 28px 20px;
+    background: linear-gradient(135deg, var(--gold) 0%, #C99935 100%);
+    border-radius: 24px;
+    padding: 24px;
+    color: var(--navy-deep);
+    position: relative;
+    overflow: hidden;
+  }
+  .subscription-card::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    border: 1px solid rgba(11, 31, 58, 0.15);
+    border-radius: 50%;
+  }
+  .sub-tier {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 600;
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+  .sub-plan-name {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .sub-meta {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid rgba(11, 31, 58, 0.15);
+    position: relative;
+    z-index: 2;
+  }
+  .sub-meta-item .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+  .sub-meta-item .value {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .menu-section {
+    background: white;
+    margin: 0 20px 16px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .menu-item {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--line);
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item:active { background: var(--paper); }
+  .menu-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--navy);
+  }
+  .menu-label { flex: 1; font-size: 15px; color: var(--navy-deep); font-weight: 500; }
+  .menu-chevron { color: var(--muted); }
+
+  /* ============ BOTTOM NAV ============ */
+  .tab-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--line);
+    padding: 8px 16px 24px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+  }
+  .tab-bar.hidden { display: none; }
+  .tab {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    cursor: pointer;
+    color: var(--muted);
+    font-family: inherit;
+    transition: color 0.2s ease;
+  }
+  .tab.active { color: var(--navy-deep); }
+  .tab.fab {
+    background: var(--navy);
+    color: var(--cream);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    margin-top: -20px;
+    box-shadow: 0 8px 20px rgba(11, 31, 58, 0.25);
+    padding: 0;
+  }
+  .tab.fab .tab-label { display: none; }
+  .tab-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* Bottom action bar (request flow) */
+  .bottom-action {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 24px 32px;
+    background: linear-gradient(180deg, transparent 0%, var(--cream) 30%);
+    z-index: 50;
+  }
+
+  /* Toast */
+  .toast {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--navy-deep);
+    color: var(--cream);
+    padding: 12px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  /* Scrollable plan select */
+  .plan-toggle {
+    display: flex;
+    background: rgba(11, 31, 58, 0.06);
+    border-radius: 12px;
+    padding: 4px;
+    margin: 0 24px 8px;
+  }
+  .toggle-opt {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .toggle-opt.active {
+    background: white;
+    color: var(--navy-deep);
+    box-shadow: var(--shadow-sm);
+  }
+
+</style>
+</head>
+<body>
+
+<div class="device-wrap">
+  <div class="device">
+
+    <!-- Status bar -->
+    <div class="status-bar" id="statusBar">
+      <span>9:41</span>
+      <span class="status-icons">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="0.5"/><rect x="5" y="5" width="3" height="7" rx="0.5"/><rect x="10" y="2" width="3" height="10" rx="0.5"/><rect x="15" y="0" width="3" height="12" rx="0.5"/></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2C4.5 2 1.5 4 0 6.5c1.5 2.5 4.5 4.5 8 4.5s6.5-2 8-4.5C14.5 4 11.5 2 8 2z" opacity="0.4"/><path d="M8 4a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg>
+        <svg width="24" height="11" viewBox="0 0 24 11" fill="none" stroke="currentColor" stroke-width="1"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5"/><rect x="2" y="2" width="17" height="7" rx="1" fill="currentColor"/><rect x="21.5" y="3.5" width="1.5" height="4" rx="0.5" fill="currentColor"/></svg>
+      </span>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <span id="toastText">Request submitted</span>
+    </div>
+
+    <!-- App body -->
+    <div class="app-body" id="appBody">
+
+      <!-- ===== ONBOARDING ===== -->
+      <div class="screen active" id="screen-onboard">
+        <div class="onboard">
+          <div class="logo-mark">
+            <div class="logo-star"></div>
+            <div class="logo-text">AtlasGate</div>
+          </div>
+          <div class="hero">
+            <div class="hero-tag">Dallas · Plano · Frisco · Carrollton</div>
+            <h1 class="hero-title">Your home,<br><em>handled.</em></h1>
+            <p class="hero-sub">One subscription. Every home service. Vetted local pros across the DFW metroplex, on call when you need them.</p>
+          </div>
+          <div class="onboard-cta">
+            <button class="btn btn-gold btn-block" onclick="goTo('screen-plans')">
+              See Membership Plans
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+            <button class="btn btn-ghost btn-block" onclick="goTo('screen-home')">I already have an account</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== PLANS ===== -->
+      <div class="screen" id="screen-plans">
+        <div class="plans-screen">
+          <div class="plans-header">
+            <button class="back-btn" onclick="goTo('screen-onboard')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+          </div>
+          <div class="plans-intro">
+            <div class="eyebrow">Membership</div>
+            <h1 class="plans-title">Pick the <em>plan</em><br>for your home.</h1>
+            <p class="plans-sub">Cancel anytime. All plans include access to our vetted Dallas-area contractor network.</p>
+          </div>
+
+          <div class="plan-toggle">
+            <button class="toggle-opt active">Monthly</button>
+            <button class="toggle-opt">Yearly · Save 15%</button>
+          </div>
+
+          <div class="plan-cards">
+            <!-- BASIC -->
+            <div class="plan-card plan-basic" onclick="selectPlan('Basic')">
+              <div class="plan-name">Basic</div>
+              <div class="plan-price">
+                <span class="amount">$29</span>
+                <span class="period">/ month</span>
+              </div>
+              <ul class="plan-features">
+                <li>Exterior walkaround inspection (1x per year)</li>
+                <li>Interior walkaround inspection (1x per year)</li>
+                <li>25% off all repairs &amp; services</li>
+                <li>Priority service scheduling (48–72 hr)</li>
+              </ul>
+            </div>
+
+            <!-- STANDARD -->
+            <div class="plan-card plan-standard" onclick="selectPlan('Standard')">
+              <div class="plan-badge">Most Popular</div>
+              <div class="plan-name" style="color: var(--gold);">Standard</div>
+              <div class="plan-price">
+                <span class="amount">$79</span>
+                <span class="period">/ month</span>
+              </div>
+              <ul class="plan-features">
+                <li>1 free service per month</li>
+                <li>Exterior walkarounds (4x per year)</li>
+                <li>Interior walkarounds (4x per year)</li>
+                <li>Priority service (24–48 hr)</li>
+                <li>30% off repairs (2x per month)</li>
+              </ul>
+            </div>
+
+            <!-- PREMIUM -->
+            <div class="plan-card plan-premium" onclick="selectPlan('Premium')">
+              <div class="plan-badge">White Glove</div>
+              <div class="plan-name">Premium</div>
+              <div class="plan-price">
+                <span class="amount">$149</span>
+                <span class="period">/ month</span>
+              </div>
+              <ul class="plan-features">
+                <li>2 free services per month</li>
+                <li>Exterior walkarounds (6x per year)</li>
+                <li>Interior walkarounds (6x per year)</li>
+                <li>Seasonal prep (winter &amp; summer)</li>
+                <li>40% off repairs (3x per month)</li>
+                <li>Emergency same / next-day response</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== HOME ===== -->
+      <div class="screen" id="screen-home">
+        <div class="app-screen">
+          <div class="top-bar">
+            <div class="greeting-block">
+              <div class="hello">Good morning,</div>
+              <div class="name">Jordan</div>
+            </div>
+            <div class="avatar" onclick="goTo('screen-profile')">J</div>
+          </div>
+
+          <!-- Plan card -->
+          <div class="home-plan-card">
+            <div class="plan-status-row">
+              <div class="plan-tier"><span class="dot"></span> Standard Member</div>
+              <div class="plan-actions">
+                <button class="plan-action-btn">Upgrade</button>
+              </div>
+            </div>
+            <div class="plan-next-service">Your next free service is available</div>
+            <div class="plan-headline">Schedule your<br>July walkaround.</div>
+            <div class="plan-stats">
+              <div class="stat-item">
+                <div class="stat-num">1</div>
+                <div class="stat-label">Free Service</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-num">2</div>
+                <div class="stat-label">30% Discounts</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-num">24h</div>
+                <div class="stat-label">Priority</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Services -->
+          <div class="section-head">
+            <div class="section-title">Request a Service</div>
+            <button class="section-link">See All</button>
+          </div>
+          <div class="service-grid">
+            <div class="service-tile featured" onclick="goTo('screen-request')">
+              <div class="service-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div>
+                <div class="service-name">Home Cleaning</div>
+                <div class="service-meta">Plan service · Free</div>
+              </div>
+            </div>
+            <div class="service-tile" onclick="goTo('screen-request')">
+              <div class="service-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/><path d="M20 8v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8z"/></svg>
+              </div>
+              <div>
+                <div class="service-name">Plumbing</div>
+                <div class="service-meta">30% off with plan</div>
+              </div>
+            </div>
+            <div class="service-tile" onclick="goTo('screen-request')">
+              <div class="service-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <div>
+                <div class="service-name">Electrical</div>
+                <div class="service-meta">Licensed in TX</div>
+              </div>
+            </div>
+            <div class="service-tile" onclick="goTo('screen-request')">
+              <div class="service-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+              </div>
+              <div>
+                <div class="service-name">HVAC</div>
+                <div class="service-meta">Texas heat? We got you</div>
+              </div>
+            </div>
+            <div class="service-tile" onclick="goTo('screen-request')">
+              <div class="service-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22V12a10 10 0 0 1 20 0v10"/><path d="M2 17h20"/></svg>
+              </div>
+              <div>
+                <div class="service-name">Lawn Care</div>
+                <div class="service-meta">Plan service · Free</div>
+              </div>
+            </div>
+            <div class="service-tile" onclick="goTo('screen-request')">
+              <div class="service-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M2 12h20M12 2v20"/></svg>
+              </div>
+              <div>
+                <div class="service-name">Handyman</div>
+                <div class="service-meta">Small repairs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active jobs -->
+          <div class="section-head">
+            <div class="section-title">Your Active Jobs</div>
+            <button class="section-link">View All</button>
+          </div>
+          <div class="job-list">
+            <div class="job-card" onclick="goTo('screen-job')">
+              <div class="job-status-icon live">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="job-info">
+                <div class="job-title">Kitchen sink leak repair</div>
+                <div class="job-meta"><span class="job-pill live">Tech En Route · 12 min</span></div>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--muted);"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="job-card">
+              <div class="job-status-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div class="job-info">
+                <div class="job-title">AC tune-up &amp; filter change</div>
+                <div class="job-meta"><span class="job-pill scheduled">Scheduled · Mon 9 AM</span></div>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--muted);"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="cta-banner">
+            <div class="cta-eyebrow">Add On Services</div>
+            <div class="cta-title">Drywall, junk removal, deep clean, power washing &amp; more.</div>
+            <button class="cta-btn" onclick="goTo('screen-request')">Browse Services</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== REQUEST FLOW ===== -->
+      <div class="screen" id="screen-request">
+        <div class="request-screen">
+          <div class="request-header">
+            <button class="back-btn" onclick="goTo('screen-home')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+            <h2>New Service Request</h2>
+          </div>
+          <div class="step-progress">
+            <div class="step-dot active"></div>
+            <div class="step-dot"></div>
+            <div class="step-dot"></div>
+          </div>
+
+          <div class="request-body">
+            <div class="request-eyebrow">Step 1 of 3</div>
+            <h2 class="request-title">What's going on?</h2>
+            <p class="request-sub">Describe the issue — snap a photo if you can. We'll dispatch a vetted pro.</p>
+
+            <label class="field-label">Service type</label>
+            <input class="text-input" value="Plumbing — Kitchen sink" readonly>
+
+            <label class="field-label">Describe the issue</label>
+            <textarea class="text-area" placeholder="Water dripping under the sink, started this morning...">Water dripping slowly under kitchen sink. Looks like the trap or supply line. Bowl underneath catching it for now.</textarea>
+
+            <label class="field-label">Photos (optional but helpful)</label>
+            <div class="photo-upload">
+              <div class="photo-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </div>
+              <div class="photo-text">Add a photo</div>
+              <div class="photo-sub">Camera or upload from library</div>
+            </div>
+
+            <label class="field-label">Urgency</label>
+            <div class="urgency-options">
+              <div class="urgency-opt selected">
+                <div class="urgency-name">Standard</div>
+                <div class="urgency-time">24–48 hours</div>
+              </div>
+              <div class="urgency-opt">
+                <div class="urgency-name">Emergency</div>
+                <div class="urgency-time">Same day · +$75</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom-action">
+            <button class="btn btn-navy btn-block" onclick="submitRequest()">
+              Submit Request
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== JOB DETAIL ===== -->
+      <div class="screen" id="screen-job">
+        <div class="job-detail-screen">
+          <div class="job-hero">
+            <div class="job-hero-top">
+              <button class="back-btn-light" onclick="goTo('screen-home')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              </button>
+            </div>
+            <div class="job-hero-tag">Service Request · #AG-2841</div>
+            <h1 class="job-hero-title">Kitchen sink<br>leak repair</h1>
+            <div class="tech-info">
+              <div class="tech-avatar">M</div>
+              <div>
+                <div class="tech-name">Miguel R.</div>
+                <div class="tech-role">Master Plumber · 4.9 ★</div>
+              </div>
+              <div class="tech-eta">
+                <div class="eta-time">12 min</div>
+                <div class="eta-label">ETA</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-title">Job Timeline</div>
+            <div class="timeline-item done">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-name">Request submitted</div>
+                <div class="timeline-time">Today · 8:42 AM</div>
+              </div>
+            </div>
+            <div class="timeline-item done">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-name">Tech assigned · Miguel R.</div>
+                <div class="timeline-time">Today · 9:01 AM</div>
+              </div>
+            </div>
+            <div class="timeline-item current">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-name">En route to your home</div>
+                <div class="timeline-time">Arriving in 12 minutes</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-name">Diagnosis &amp; quote</div>
+                <div class="timeline-time">Pending</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <div class="timeline-name">Work completed</div>
+                <div class="timeline-time">Pending</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="job-actions">
+            <button class="btn btn-outline" style="flex:1;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Message
+            </button>
+            <button class="btn btn-navy" style="flex:1;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Call Tech
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== PROFILE ===== -->
+      <div class="screen" id="screen-profile">
+        <div class="profile-screen">
+          <div class="request-header" style="padding-bottom: 0;">
+            <button class="back-btn" onclick="goTo('screen-home')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+            <h2>Account</h2>
+          </div>
+
+          <div class="profile-header">
+            <div class="profile-avatar">J</div>
+            <div class="profile-name">Jordan Hayes</div>
+            <div class="profile-email">jordan.hayes@email.com · Carrollton, TX</div>
+          </div>
+
+          <div class="subscription-card">
+            <div class="sub-tier">Active Subscription</div>
+            <div class="sub-plan-name">Standard · $79/mo</div>
+            <div class="sub-meta">
+              <div class="sub-meta-item">
+                <div class="label">Next Billing</div>
+                <div class="value">Jun 28</div>
+              </div>
+              <div class="sub-meta-item">
+                <div class="label">Member Since</div>
+                <div class="value">Mar 2026</div>
+              </div>
+              <div class="sub-meta-item">
+                <div class="label">Saved</div>
+                <div class="value">$1,240</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-section">
+            <div class="menu-item">
+              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+              <div class="menu-label">My Properties</div>
+              <svg class="menu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="menu-item">
+              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+              <div class="menu-label">Payment Methods</div>
+              <svg class="menu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="menu-item" onclick="goTo('screen-plans')">
+              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3V4a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v3H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"/></svg></div>
+              <div class="menu-label">Manage Subscription</div>
+              <svg class="menu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="menu-item">
+              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+              <div class="menu-label">Service History</div>
+              <svg class="menu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="menu-item">
+              <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+              <div class="menu-label">Help &amp; Support</div>
+              <svg class="menu-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>
+
+          <div style="padding: 8px 24px 0; text-align: center; color: var(--muted); font-size: 12px;">
+            AtlasGate v1.0 · Serving DFW
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom tab bar -->
+    <div class="tab-bar" id="tabBar">
+      <button class="tab active" data-tab="screen-home" onclick="goTo('screen-home')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span class="tab-label">Home</span>
+      </button>
+      <button class="tab" onclick="goTo('screen-job')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span class="tab-label">Jobs</span>
+      </button>
+      <button class="tab fab" onclick="goTo('screen-request')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <button class="tab" onclick="goTo('screen-plans')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5 12 2"/></svg>
+        <span class="tab-label">Plans</span>
+      </button>
+      <button class="tab" onclick="goTo('screen-profile')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="tab-label">Account</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Screens that hide the tab bar
+  const hideTabOn = ['screen-onboard', 'screen-request', 'screen-job'];
+  // Screens with dark status bar
+  const darkStatusOn = ['screen-onboard', 'screen-job'];
+
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+
+    // Tab bar visibility
+    const bar = document.getElementById('tabBar');
+    if (hideTabOn.includes(id)) bar.classList.add('hidden');
+    else bar.classList.remove('hidden');
+
+    // Status bar styling
+    const sb = document.getElementById('statusBar');
+    if (darkStatusOn.includes(id)) sb.classList.add('dark');
+    else sb.classList.remove('dark');
+
+    // Tab indicator
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    const activeTab = document.querySelector(`.tab[data-tab="${id}"]`);
+    if (activeTab) activeTab.classList.add('active');
+
+    // Reset scroll
+    document.getElementById('appBody').scrollTop = 0;
+  }
+
+  function selectPlan(name) {
+    showToast(`${name} plan selected — continue to checkout`);
+    setTimeout(() => goTo('screen-home'), 800);
+  }
+
+  function submitRequest() {
+    showToast('Request submitted · Finding a pro...');
+    setTimeout(() => goTo('screen-job'), 900);
+  }
+
+  function showToast(text) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastText').textContent = text;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // Urgency selection
+  document.querySelectorAll('.urgency-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.urgency-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+
+  // Plan billing toggle
+  document.querySelectorAll('.toggle-opt').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.toggle-opt').forEach(o => o.classList.remove('active'));
+      t.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
